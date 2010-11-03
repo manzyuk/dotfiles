@@ -1,0 +1,6 @@
+Config { font = "-*-terminus-medium-r-*-*-14-*-*-*-*-*-iso10646-1"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Top
+       , lowerOnStart = True
+       }

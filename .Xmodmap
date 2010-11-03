@@ -1,0 +1,7 @@
+remove lock      = Caps_Lock
+keysym Caps_Lock = Control_L
+add    control   = Control_L
+
+remove mod4      = Super_R
+keysym Super_R   = Control_R
+add    control   = Control_R
