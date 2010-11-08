@@ -14,7 +14,7 @@ import XMonad.Util.Font                  (encodeOutput)
 import XMonad.Util.EZConfig              (additionalKeysP)
 import XMonad.Util.NamedWindows          (getName)
 
-import Data.List                         (intersperse, sortBy)
+import Data.List                         (intercalate, sortBy)
 import Data.Maybe                        (isJust, catMaybes)
 import Data.Monoid                       (All(All), mappend)
 import Data.Function                     (on)
@@ -50,7 +50,7 @@ main = do
                                 ]
 
 
-xmobar screen template commands = spawnPipe . concat . intersperse " " $ options
+xmobar screen template commands = spawnPipe . intercalate " " $ options
     where options = [ "xmobar"
                     , "-x"
                     , show screen
@@ -136,7 +136,7 @@ pprWindowSet' screen sort' urgents pp s = sepBy (ppWsSep pp) . map fmt . sort' $
 
 
 sepBy :: String -> [String] -> String
-sepBy sep = concat . intersperse sep . filter (not . null)
+sepBy sep = intercalate sep . filter (not . null)
 
 
 -- Support for toggling Totem movie player fullscreen, see:
