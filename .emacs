@@ -8,6 +8,7 @@
  '(TeX-save-query nil)
  '(TeX-source-correlate-method (quote source-specials))
  '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t)
  '(before-save-hook (quote (whitespace-cleanup)))
  '(bookmark-default-file "~/.emacs.d/.bookmarks")
  '(column-number-mode t)
@@ -137,49 +138,6 @@
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 
-;;; SLIME
-;; (require 'slime)
-;; (slime-setup '(slime-fancy slime-asdf slime-tramp))
-
-;; (setq inferior-lisp-program         "sbcl"
-;;       slime-net-coding-system       'utf-8-unix
-;;       slime-lisp-implementations    '((sbcl ("sbcl") :coding-system utf-8-unix))
-;;       slime-autodoc-use-multiline-p t)
-
-;; (push (slime-create-filename-translator
-;;        :machine-instance "milk"
-;;        :remote-host "mshare.tw"
-;;        :username "manzyuk")
-;;       slime-filename-translations)
-
-;; (push (list ".*" #'identity #'identity)
-;;       slime-filename-translations)
-
-;; (global-set-key "\C-cs" 'slime-selector)
-
-;; (require 'info-look)
-
-;; (info-lookup-add-help
-;;  :mode 'lisp-mode
-;;  :regexp "[^][()'\" \t\n]+"
-;;  :ignore-case t
-;;  :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
-
-;; (info-lookup-add-help
-;;  :mode 'slime-repl-mode
-;;  :regexp "[^][()'\" \t\n]+"
-;;  :ignore-case t
-;;  :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
-
-;;; Scheme
-(setq scheme-program-name "/home/manzyuk/bin/mit-scheme")
-
-;;; Ruby
-(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
-(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-(setq ruby-program-name "irb1.9.1 --inf-ruby-mode")
-
 ;;; Haskell
 (load "~/.emacs.d/site-lisp/haskell-mode-2.8.0/haskell-site-file")
 
@@ -195,20 +153,3 @@
 
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-
-(setq TeX-source-specials-view-start-server t)
-
-;;; Org-mode
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(global-set-key "\C-ca" 'org-agenda)
-
-(org-remember-insinuate)
-(define-key global-map "\C-cr" 'org-remember)
-
-(setq org-agenda-files '("~/documents/notes.org"))
-
-(setq org-remember-templates
-      '(("note" ?n "%?\n\nAdded: %U" "~/documents/notes.org" "Notes")))
-
-(add-hook 'org-mode-hook 'flyspell-mode)
-(add-hook 'org-mode-hook 'auto-fill-mode)
