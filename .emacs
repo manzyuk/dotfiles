@@ -22,6 +22,7 @@
  '(font-latex-fontify-script nil)
  '(font-latex-fontify-sectioning (quote color))
  '(font-latex-script-display (quote (nil)))
+ '(global-auto-revert-mode t)
  '(icomplete-mode t)
  '(ido-enable-flex-matching t)
  '(ido-everywhere t)
