@@ -53,13 +53,6 @@
   ;; If there is more than one, they won't work right.
  )
 
-;;; Add ~/.emacs.d/site-lisp/ and all its subdirectories to load path.
-(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-    (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
-           (default-directory my-lisp-dir))
-      (setq load-path (cons my-lisp-dir load-path))
-      (normal-top-level-add-subdirs-to-load-path)))
-
 ;;; Use y/n instead of yes/no in confirmation dialogs.
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -139,7 +132,8 @@
 (add-hook 'text-mode-hook 'auto-fill-mode)
 
 ;;; Haskell
-(load "~/.emacs.d/site-lisp/haskell-mode-2.8.0/haskell-site-file")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode-2.8.0")
+(load "haskell-site-file")
 
 (autoload 'haskell-mode "haskell-mode" "Haskell mode." t)
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
@@ -147,9 +141,37 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 ;;; AUCTeX
+(add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
 (load "auctex.el" nil t t)
 
 (require 'reftex)
 
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+
+;;; Org-mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org-7.3/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org-7.3/contrib/lisp")
+
+(require 'org-install)
+
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+
+(setq org-agenda-files '("~/org/todo.org"))
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+
+(setq org-tag-alist
+      '(("work"     . ?w)
+        ("home"     . ?h)
+        ("email"    . ?e)
+        ("phone"    . ?p)
+        ("computer" . ?c)))
+
+(setq org-tags-column -80)
+
+(setq org-capture-templates
+      '(("t" "TODO" entry (file "~/org/todo.org") "* TODO %?")))
