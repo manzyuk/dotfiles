@@ -40,9 +40,9 @@ main = do
              }
              `additionalKeysP`
              [ ("M-p", dmenu)
-             , ("<XF86AudioMute>",        spawn "amixer -q set Front    toggle")
-             , ("<XF86AudioLowerVolume>", spawn "amixer -q set Front 1- unmute")
-             , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Front 1+ unmute")
+             , ("<XF86AudioMute>",        spawn "amixer -q set 'Master Front'    toggle")
+             , ("<XF86AudioLowerVolume>", spawn "amixer -q set 'Master Front' 1- unmute")
+             , ("<XF86AudioRaiseVolume>", spawn "amixer -q set 'Master Front' 1+ unmute")
              ]
     where
       manageFloats = composeOne [ isFullscreen -?> doFullFloat
