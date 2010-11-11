@@ -22,4 +22,4 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export PATH="$HOME/local/texlive/2010/bin/x86_64-linux:$HOME/.cabal/bin:$PATH"
-export GREP_OPTIONS='--color=auto'
+export GREP_OPTIONS='--color=auto --ignore-case'
