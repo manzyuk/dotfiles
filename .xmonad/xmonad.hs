@@ -1,12 +1,15 @@
 import XMonad
 import qualified XMonad.StackSet as S
 
+import XMonad.Layout.IM
+import XMonad.Layout.Reflect             (reflectHoriz)
 import XMonad.Layout.NoBorders           (smartBorders)
+import XMonad.Layout.PerWorkspace        (onWorkspace)
 
 import XMonad.Hooks.SetWMName            (setWMName)
 import XMonad.Hooks.DynamicLog    hiding (xmobar)
 import XMonad.Hooks.ManageDocks          (avoidStruts, manageDocks)
-import XMonad.Hooks.UrgencyHook          (readUrgents)
+import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageHelpers
 
 import XMonad.Util.Run                   (spawnPipe, hPutStrLn)
@@ -14,18 +17,20 @@ import XMonad.Util.Font                  (encodeOutput)
 import XMonad.Util.EZConfig              (additionalKeysP)
 import XMonad.Util.NamedWindows          (getName)
 
-import Data.List                         (intercalate, sortBy)
+import Data.List                         (intercalate, sortBy, isInfixOf)
 import Data.Maybe                        (isJust, catMaybes)
+import Data.Ratio                        ((%))
 import Data.Monoid                       (All(All), mappend)
 import Data.Function                     (on)
 
 import Monad                             (when)
-import Control.Monad                     (zipWithM_)
+import Control.Monad                     (zipWithM_, liftM2)
+
 
 main = do
   xmobar0 <- xmobar 0 "%StdinReader%}{"       "[Run StdinReader]"
   xmobar1 <- xmobar 1 "%StdinReader%}{%date%" "[Run StdinReader, Run Date \"%a %b %_d, %H:%M\" \"date\" 10]"
-  xmonad $ defaultConfig {
+  xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
                focusFollowsMouse = False
              , borderWidth       = 2
              , terminal          = "urxvtc"
@@ -33,8 +38,9 @@ main = do
              , logHook           = myLogHook [ pp { ppOutput = hPutStrLn xmobar0 }
                                              , pp { ppOutput = hPutStrLn xmobar1 }
                                              ]
-             , layoutHook        = avoidStruts  $  smartBorders  $  layoutHook defaultConfig
-             , manageHook        = manageDocks <+> manageFloats <+> manageHook defaultConfig
+             , workspaces        = myWorkspaces
+             , layoutHook        = myLayoutHook
+             , manageHook        = myManageHook
              , startupHook       = setWMName "LG3D"
              , handleEventHook   = fullscreenEventHook `mappend` handleEventHook defaultConfig
              }
@@ -44,10 +50,27 @@ main = do
              , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%- unmute")
              , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+ unmute")
              ]
-    where
-      manageFloats = composeOne [ isFullscreen -?> doFullFloat
-                                , isDialog     -?> doFloat
-                                ]
+
+
+myWorkspaces = ["1:edit", "2:surf", "3:read", "4:chat", "5:play", "6:misc", "7:misc", "8:misc", "9:misc"]
+
+
+myLayoutHook = avoidStruts $ smartBorders $ onWorkspace "4:chat" pidginLayout $ layoutHook defaultConfig
+    where pidginLayout = reflectHoriz $ withIM (1/7) (Role "buddy_list") Full
+
+
+myManageHook = manageDocks <+> manageFloats <+> manageApps
+    where manageFloats = composeOne [ isFullscreen -?> doFullFloat
+                                    , isDialog     -?> doFloat
+                                    ]
+          manageApps   = composeAll [ className =? "Emacs"         --> moveTo "1:edit"
+                                    , className =? "Iceweasel"     --> moveTo "2:surf"
+                                    , className =? "Google-chrome" --> moveTo "2:surf"
+                                    , className =? "Pidgin"        --> moveTo "4:chat"
+                                    , className =? "Rhythmbox"     --> moveTo "5:play"
+                                    , className =? "Evince"        --> moveTo "3:read"
+                                    ]
+          moveTo       = doF . liftM2 (.) S.view S.shift
 
 
 xmobar screen template commands = spawnPipe . intercalate " " $ options
@@ -67,19 +90,20 @@ dmenu = do
 
 
 pp = defaultPP {
-       ppHiddenNoWindows = xmobarColor "#444444"  ""       . pad
-     , ppCurrent         = xmobarColor "#ffffff" "#777777" . pad
+       ppHiddenNoWindows = xmobarColor "DimGray"      ""            . pad
+     , ppCurrent         = xmobarColor "White"        "DimGray"     . pad
      , ppVisible         = pad
      , ppHidden          = pad
-     , ppLayout          = pad . \x -> case x of
-                                         "Tall"        -> "[|]"
-                                         "Mirror Tall" -> "[-]"
-                                         "Full"        -> "[ ]"
-                                         _             -> "[?]"
-     , ppTitle           = shorten 200
+     , ppUrgent          = xmobarColor ""             "LightSalmon"       . xmobarStrip
+     , ppLayout          = xmobarColor "LightSkyBlue" ""            . pad . iconify
+     , ppTitle           = xmobarColor "PaleGreen"    ""            . pad . shorten 200
      , ppWsSep           = ""
      , ppSep             = ""
      }
+    where iconify "Tall"                   = "[|]"
+          iconify "Mirror Tall"            = "[-]"
+          iconify l | "Full" `isInfixOf` l = "[ ]"
+          iconify _                        = "[?]"
 
 
 myLogHook pps = do
