@@ -68,39 +68,48 @@ dmenu is completely controlled by the keyboard. The following keys are recognize
 Appends the character to the text in the input field.  This works as a filter:
 only items containing this text will be displayed.
 .TP
-.B Left/Right (Ctrl\-b/Ctrl\-f)
-Move the cursor left/right.
+.B Left/Right (C\-b/C\-f)
+Move the cursor back/forward a character.
 .TP
-.B Ctrl\-r/Ctrl\-s
+.B Up/Down (C\-p/C\-n)
 Select the previous/next item.
 .TP
-.B Up/Down (Ctrl\-n/Ctrl\-p)
+.B PgUp/PgDn (M\-v/C\-v)
 Select the first item of the previous/next 'page' of items.
 .TP
-.B Home/End (Ctrl\-a/Ctrl\-e)
+.B Home/End (C\-a/C\-e)
+Move the cursor to the beginning/end of the input field.
+.TP
+.B C\-Home/C\-End (M\-</M\->)
 Select the first/last item.
 .TP
-.B Tab (Ctrl\-i)
+.B Tab (C\-i)
 Copy the selected item to the input field.
 .TP
-.B Return (Ctrl\-j, Ctrl\-m)
+.B Return (C\-j, C\-m)
 Confirm selection and quit (print the selected item to standard output). Returns
 .B 0
 on termination.
 .TP
-.B Escape (Ctrl\-g)
+.B Escape (C\-g)
 Quit without selecting an item. Returns
 .B 1
 on termination.
 .TP
-.B Backspace (Ctrl\-h)
-Remove a character from the input field.
+.B Backspace (C\-h)
+Delete the character behind the cursor.
 .TP
-.B Ctrl\-u
-Remove all characters from the input field.
+.B Delete (C-d)
+Delete the character at point.
 .TP
-.B Ctrl\-w
-Remove all characters of current word from the input field.
+.B C\-k
+Kill the text from point to the end of the input field.
+.TP
+.B C\-u
+Kill backward from point to the beginning of the input field.
+.TP
+.B C\-w
+Kill the word behind point, using white space as the word boundary.
 .SH SEE ALSO
 .BR dwm (1),
 .BR wmii (1) .

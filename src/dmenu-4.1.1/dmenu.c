@@ -424,9 +424,6 @@ kpress(XKeyEvent * e) {
     case XK_b:
       ksym = XK_Left;
       break;
-    case XK_c:
-      ksym = XK_Escape;
-      break;
     case XK_d:
       ksym = XK_Delete;
       break;
@@ -446,6 +443,12 @@ kpress(XKeyEvent * e) {
       ksym = XK_Tab;
       break;
     case XK_j:
+      ksym = XK_Return;
+      break;
+    case XK_k:
+      text[cursor] = '\0';
+      match(text);
+      break;
     case XK_m:
       ksym = XK_Return;
       break;
@@ -455,32 +458,13 @@ kpress(XKeyEvent * e) {
     case XK_p:
       ksym = XK_Up;
       break;
-    case XK_r:
-    if(sel && sel->left){
-      sel=sel->left;
-      if(sel->right == curr) {
-        curr = prev;
-        calcoffsets();
-      }
-    }
-    else
-      return;
-      break;
-    case XK_s:
-    if(sel && sel->right) {
-      sel=sel->right;
-      if(sel == next) {
-        curr = next;
-        calcoffsets();
-      }
-    }
-    else
-      return;
-      break;
     case XK_u:
       memmove(text, text + cursor, sizeof text - cursor + 1);
       cursor = 0;
       match(text);
+      break;
+    case XK_v:
+      ksym = XK_Next;
       break;
     case XK_w:
       if(cursor > 0) {
@@ -492,6 +476,43 @@ kpress(XKeyEvent * e) {
         match(text);
       }
       break;
+    case XK_Home:
+      sel = curr = item;
+      calcoffsets();
+      drawmenu();
+      return;
+    case XK_End:
+      while(next) {
+        sel = curr = next;
+        calcoffsets();
+      }
+      while(sel && sel->right)
+        sel = sel->right;
+      drawmenu();
+      return;
+    }
+  }
+  if (e->state & Mod1Mask) {
+    switch (ksym) {
+    default:
+      return;
+    case XK_v:
+      ksym = XK_Prior;
+      break;
+    case XK_less:
+      sel = curr = item;
+      calcoffsets();
+      drawmenu();
+      return;
+    case XK_greater:
+      while(next) {
+        sel = curr = next;
+        calcoffsets();
+      }
+      while(sel && sel->right)
+        sel = sel->right;
+      drawmenu();
+      return;
     }
   }
   switch(ksym) {
@@ -522,28 +543,14 @@ kpress(XKeyEvent * e) {
     match(text);
     break;
   case XK_End:
-    if(cursor < len) {
-      cursor = len;
-      break;
-    }
-    while(next) {
-      sel = curr = next;
-      calcoffsets();
-    }
-    while(sel && sel->right)
-      sel = sel->right;
+    cursor = len;
     break;
   case XK_Escape:
     ret = 1;
     running = False;
     break;
   case XK_Home:
-    if(sel == item) {
-      cursor = 0;
-      break;
-    }
-    sel = curr = item;
-    calcoffsets();
+    cursor = 0;
     break;
   case XK_Left:
     if(cursor > 0) {
@@ -554,12 +561,34 @@ kpress(XKeyEvent * e) {
       return;
     break;
   case XK_Down:
+    if(sel && sel->right) {
+      sel=sel->right;
+      if(sel == next) {
+        curr = next;
+        calcoffsets();
+      }
+    }
+    else
+      return;
+    break;
+  case XK_Up:
+    if(sel && sel->left){
+      sel=sel->left;
+      if(sel->right == curr) {
+        curr = prev;
+        calcoffsets();
+      }
+    }
+    else
+      return;
+    break;
+  case XK_Next:
     if(!next)
       return;
     sel = curr = next;
     calcoffsets();
     break;
-  case XK_Up:
+  case XK_Prior:
     if(!prev)
       return;
     sel = curr = prev;

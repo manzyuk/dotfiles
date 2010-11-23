@@ -45,7 +45,8 @@ main = do
              , handleEventHook   = fullscreenEventHook `mappend` handleEventHook defaultConfig
              }
              `additionalKeysP`
-             [ ("M-p", dmenu)
+             [ ("M-p", withDmenu "." "dmenu_path" "exec" ["-p", "'Run:'"])
+             , ("M-o", withDmenu "$LIBRARY" "ls" "evince" ["-l", "75"])
              , ("<XF86AudioMute>",        spawn "amixer -q set Master     toggle")
              , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%- unmute")
              , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+ unmute")
@@ -66,9 +67,9 @@ myManageHook = manageDocks <+> manageFloats <+> manageApps
           manageApps   = composeAll [ className =? "Emacs"         --> moveTo "1:edit"
                                     , className =? "Iceweasel"     --> moveTo "2:surf"
                                     , className =? "Google-chrome" --> moveTo "2:surf"
+                                    , className =? "Evince"        --> moveTo "3:read"
                                     , className =? "Pidgin"        --> moveTo "4:chat"
                                     , className =? "Rhythmbox"     --> moveTo "5:play"
-                                    , className =? "Evince"        --> moveTo "3:read"
                                     ]
           moveTo       = doF . liftM2 (.) S.view S.shift
 
@@ -84,9 +85,29 @@ xmobar screen template commands = spawnPipe . intercalate " " $ options
                     ]
 
 
-dmenu = do
-  screen <- (fromIntegral . S.screen . S.current) `fmap` gets windowset :: X Int
-  io . spawn $ "exe=`dmenu_path | dmenu -i -p \"Run:\" -xs " ++ show screen ++ "` && exec $exe"
+currentScreenID :: X Int
+currentScreenID = (fromIntegral . S.screen . S.current) `fmap` gets windowset
+
+
+withDmenu :: String -> String -> String -> [String] -> X ()
+withDmenu dir src prg opt = do
+  screen <- currentScreenID
+  let tmp = wrap "`" "`" . intercalate " " $ [ src
+                                             , "|"
+                                             , "dmenu"
+                                             , "-i"
+                                             , "-xs"
+                                             , show screen
+                                             ] ++ opt
+      cmd = intercalate " " [ "cd"
+                            , dir
+                            , "&&"
+                            , "tmp=" ++ tmp
+                            , "&&"
+                            , prg
+                            , "\"$tmp\""
+                            ]
+  io . spawn $ cmd
 
 
 pp = defaultPP {
