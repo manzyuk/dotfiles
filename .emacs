@@ -76,11 +76,9 @@
                  (mode . emacs-lisp-mode)
                  (name . "^\\*scratch\\*$")
                  (name . "^\\*Messages\\*$")))
-               ("SLIME"
+               ("LaTeX"
                 (or
-                 (mode . lisp-mode)
-                 (name . "^\\*slime")
-                 (name . "^\\*inferior-lisp\\*$")))
+                 (mode . latex-mode)))
                ("Haskell"
                 (or
                  (mode . haskell-mode)
