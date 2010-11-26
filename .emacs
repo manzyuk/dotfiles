@@ -117,6 +117,7 @@
 ;;; Set environment variables.
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" "emacsclient")
+(setenv "PAGER"  "cat")
 
 ;;; `eshell' cannot handle `ssh' properly, fall back to `ansi-term' instead.
 (add-hook 'eshell-first-time-mode-hook
