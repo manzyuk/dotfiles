@@ -140,6 +140,12 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
+;;; Ruby
+(autoload 'ruby-mode "ruby-mode" "Ruby mode." t)
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+(setq ruby-program-name "irb --inf-ruby-mode")
+
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
 (load "auctex.el" nil t t)
