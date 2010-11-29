@@ -174,7 +174,9 @@
          (completions (inferior-ruby-completions stub)))
     (comint-dynamic-simple-complete stub completions)))
 
-(define-key inferior-ruby-mode-map (kbd "TAB") 'inferior-ruby-complete)
+(add-hook 'inferior-ruby-mode-hook
+          (lambda ()
+            (define-key inferior-ruby-mode-map (kbd "TAB") 'inferior-ruby-complete)))
 
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
