@@ -23,5 +23,5 @@ fi
 
 export PATH="$HOME/local/texlive/2010/bin/x86_64-linux:$HOME/.cabal/bin:$PATH"
 export GREP_OPTIONS='--color=auto --ignore-case'
-
-export LIBRARY="/home/manzyuk/Library"
+export LIBRARY="$HOME/Library"
+export GEM_HOME="$HOME/.gems"

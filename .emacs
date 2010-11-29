@@ -117,7 +117,8 @@
 ;;; Set environment variables.
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" "emacsclient")
-(setenv "PAGER"  "cat")
+(setenv "PAGER" "cat")
+(setenv "GEM_HOME" "/home/manzyuk/.gems")
 
 ;;; `eshell' cannot handle `ssh' properly, fall back to `ansi-term' instead.
 (add-hook 'eshell-first-time-mode-hook
