@@ -147,6 +147,35 @@
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (setq ruby-program-name "irb --inf-ruby-mode")
 
+;;; Add tab-completion to the inferior Ruby mode using `irb/completion'.
+(defun inferior-ruby-completions (stub)
+  "Return a list of completions for the line of ruby code starting with SEED."
+  (let* ((process (get-buffer-process ruby-buffer))
+         (comint-filter (process-filter process))
+         (kept "")
+         completions)
+    (set-process-filter process
+                        (lambda (proc string)
+                          (setf kept (concat kept string))))
+    (process-send-string process
+                         (format "puts IRB::InputCompletor::CompletionProc.call('%s').compact\n" stub))
+    (while (not (string-match inferior-ruby-prompt-pattern kept))
+      (accept-process-output process))
+    (when (string-match "^[[:alpha:]]+?Error: " kept)
+      (error kept))
+    (setf completions (butlast (split-string kept "[\r\n]") 2))
+    (set-process-filter process comint-filter)
+    completions))
+
+(defun inferior-ruby-complete (&optional command)
+  "Complete Ruby code at point."
+  (interactive)
+  (let* ((stub (thing-at-point 'line))
+         (completions (inferior-ruby-completions stub)))
+    (comint-dynamic-simple-complete stub completions)))
+
+(define-key inferior-ruby-mode-map (kbd "TAB") 'inferior-ruby-complete)
+
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
 (load "auctex.el" nil t t)
