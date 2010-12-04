@@ -37,16 +37,18 @@
  '(initial-scratch-message nil)
  '(make-backup-files nil)
  '(menu-bar-mode nil)
+ '(mouse-drag-copy-region nil)
  '(reftex-plug-into-AUCTeX t)
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/.places")
  '(savehist-mode t nil (savehist))
  '(scroll-preserve-screen-position 1)
+ '(select-active-regions t)
  '(show-paren-mode t)
  '(tramp-default-method "ssh")
  '(uniquify-buffer-name-style (quote reverse) nil (uniquify))
  '(x-select-enable-clipboard t)
- '(x-select-enable-primary t))
+ '(x-select-enable-primary nil))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -88,9 +90,9 @@
           (lambda ()
             (ibuffer-switch-to-saved-filter-groups "default")))
 
-;;; Enable clipboard.
-(setq interprogram-cut-function   'x-select-text
-      interprogram-paste-function 'x-cut-buffer-or-selection-value)
+;;; Make mouse middle-click only paste from primary X11 selection,
+;;; not clipboard and kill ring.
+(global-set-key [mouse-2] 'mouse-yank-primary)
 
 ;;; Set the default coding system to UTF-8-UNIX.
 (prefer-coding-system 'utf-8-unix)
@@ -149,7 +151,7 @@
 
 ;;; Add tab-completion to the inferior Ruby mode using `irb/completion'.
 (defun inferior-ruby-completions (stub)
-  "Return a list of completions for the line of ruby code starting with SEED."
+  "Return a list of completions for the line of Ruby code starting with STUB."
   (let* ((process (get-buffer-process ruby-buffer))
          (comint-filter (process-filter process))
          (kept "")
