@@ -12,6 +12,7 @@
  '(before-save-hook (quote (whitespace-cleanup)))
  '(bookmark-default-file "~/.emacs.d/.bookmarks")
  '(column-number-mode t)
+ '(command-frequency-table-file "~/.emacs.d/frequencies")
  '(confirm-nonexistent-file-or-buffer nil)
  '(cursor-in-non-selected-windows nil)
  '(delete-selection-mode t)
@@ -133,6 +134,13 @@
 ;;; text-mode hooks (log-edit-mode inherits these from text-mode).
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'auto-fill-mode)
+
+;;; Enable command frequency tracking.
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(require 'command-frequency)
+(command-frequency-table-load)
+(command-frequency-mode 1)
+(command-frequency-autosave-mode 1)
 
 ;;; Haskell
 (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode-2.8.0")
