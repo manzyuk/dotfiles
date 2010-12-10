@@ -122,6 +122,7 @@
 (setenv "VISUAL" "emacsclient")
 (setenv "PAGER" "cat")
 (setenv "GEM_HOME" "/home/manzyuk/.gems")
+(setenv "BIBINPUTS" "/home/manzyuk/texmf/bibtex/bib")
 
 ;;; `eshell' cannot handle `ssh' properly, fall back to `ansi-term' instead.
 (add-hook 'eshell-first-time-mode-hook
