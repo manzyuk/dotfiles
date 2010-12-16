@@ -16,7 +16,10 @@ while line = gets do
       seen[$1] = true
       puts line
       puts (line = gets) until line =~ /^}\s*$/
-      puts
     end
+  else
+    # Print the lines between  entries as-is because they may contain,
+    # e.g., @preamble declarations.
+    puts line
   end
 end
