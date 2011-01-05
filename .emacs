@@ -61,6 +61,9 @@
   ;; If there is more than one, they won't work right.
  )
 
+;;; Disable the 3D highlighting of the mode line.
+(set-face-attribute 'mode-line nil :box nil)
+
 ;;; Use y/n instead of yes/no in confirmation dialogs.
 (fset 'yes-or-no-p 'y-or-n-p)
 
