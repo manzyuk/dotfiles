@@ -231,3 +231,8 @@
 
 (setq org-capture-templates
       '(("t" "TODO" entry (file "~/org/todo.org") "* TODO %?")))
+
+;;; Magit
+(add-to-list 'load-path "~/.emacs.d/site-lisp/magit-0.8.2")
+(require 'magit)
+(global-set-key "\C-cg" 'magit-status)
