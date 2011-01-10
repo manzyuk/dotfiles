@@ -47,6 +47,7 @@ main = do
              `additionalKeysP`
              [ ("M-p", withDmenu "." "dmenu_path" "exec" ["-p", "'Run:'"])
              , ("M-o", withDmenu "$LIBRARY" "ls" "evince" ["-l", "75"])
+             , ("M-<Esc>", spawn "gnome-screensaver-command --lock")
              , ("<XF86AudioMute>",        spawn "amixer -q set Master     toggle")
              , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%- unmute")
              , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+ unmute")
