@@ -28,12 +28,8 @@ import Control.Monad                     (zipWithM_, liftM2)
 
 
 main = do
-  xmobar0 <- xmobar 0 "%StdinReader%}{"                          [ "StdinReader" ]
-  xmobar1 <- xmobar 1 "%StdinReader%}{%inbox%  %volume%  %date%" [ "StdinReader"
-                                                                 , "Com \"$HOME/src/volume.sh\" [] \"volume\" 1"
-                                                                 , "Com \"$HOME/src/inbox.sh\" [] \"inbox\" 10"
-                                                                 , "Date \"%a %b %_d, %H:%M\" \"date\" 10"
-                                                                 ]
+  xmobar0 <- xmobar 0 "%StdinReader%}{"       "[Run StdinReader]"
+  xmobar1 <- xmobar 1 "%StdinReader%}{%date%" "[Run StdinReader, Run Date \"%a %b %_d, %H:%M\" \"date\" 10]"
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
                focusFollowsMouse = False
              , borderWidth       = 2
@@ -86,7 +82,7 @@ xmobar screen template commands = spawnPipe . intercalate " " $ options
                     , "-t"
                     , wrap "'" "'" template
                     , "-c"
-                    , wrap "'[" "]'" . sepBy ", " . map ("Run " ++) $ commands
+                    , wrap "'" "'" commands
                     ]
 
 
