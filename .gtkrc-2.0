@@ -1,18 +1,1 @@
 include "/usr/share/themes/ClearlooksClassic/gtk-2.0/gtkrc"
-
-# Pidgin theme
-style "inverted"
-{
-    font_name    = "Terminus 12"
-    text[NORMAL] = "#FFFFFF"
-    base[NORMAL] = "#000000"
-}
-
-# Apply "inverted" to conversation entry box--where you type.
-widget "*pidgin_conv_entry"  style "inverted"
-
-# Apply "inverted" to conversation history pane--where you read the conversation.
-widget "*pidgin_conv_imhtml" style "inverted"
-
-# Apply "inverted" to log viewer--where you read stored logs.
-widget "*pidgin_log_imhtml"  style "inverted"
