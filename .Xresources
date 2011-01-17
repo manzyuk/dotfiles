@@ -20,10 +20,12 @@ URxvt*color13: #AD7FA8
 URxvt*color14: #34E2E2
 URxvt*color15: #EEEEEC
 
-Emacs.font: -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso10646-1
-Emacs.reverseVideo: on
+!Emacs.font: -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso10646-1
+Emacs.FontBackend: xft
+Emacs.font: Monospace-11
+!Emacs.reverseVideo: on
 Emacs.menuBar: off
-Emacs.verticalScrollBars: off
+!Emacs.verticalScrollBars: off
 Emacs.toolBar: 0
 Emacs.borderWidth: 0
 Emacs.internalBorder: 0

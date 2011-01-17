@@ -47,6 +47,7 @@
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/.places")
  '(savehist-mode t nil (savehist))
+ '(scroll-bar-mode (quote right))
  '(scroll-preserve-screen-position 1)
  '(select-active-regions t)
  '(show-paren-mode t)

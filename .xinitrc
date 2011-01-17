@@ -7,6 +7,7 @@ xsetroot -display $DISPLAY -cursor_name 'left_ptr' -solid black
 xset -dpms
 xset s off
 
+xrdb -load $HOME/.Xresources
 xmodmap $HOME/.Xmodmap
 
 gnome-screensaver &
