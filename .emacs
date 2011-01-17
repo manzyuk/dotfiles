@@ -35,6 +35,7 @@
  '(ido-save-directory-list-file "~/.emacs.d/.ido")
  '(ido-show-dot-for-dired t)
  '(indent-tabs-mode nil)
+ '(indicate-empty-lines t)
  '(inhibit-default-init t)
  '(inhibit-startup-buffer-menu t)
  '(inhibit-startup-screen t)
