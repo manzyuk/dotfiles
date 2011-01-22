@@ -145,6 +145,9 @@
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 
+;;; Don't use spaces instead of tabs in makefiles.
+(add-hook 'makefile-gmake-mode (lambda () (setq indent-tabs-mode t)))
+
 ;;; Enable command frequency tracking.
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'command-frequency)
