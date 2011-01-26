@@ -23,8 +23,7 @@ import Data.Ratio                        ((%))
 import Data.Monoid                       (All(All), mappend)
 import Data.Function                     (on)
 
-import Monad                             (when)
-import Control.Monad                     (zipWithM_, liftM2)
+import Control.Monad                     (when, zipWithM_, liftM2)
 
 
 main = do
@@ -75,7 +74,7 @@ myManageHook = manageDocks <+> manageFloats <+> manageApps
           moveTo       = doF . liftM2 (.) S.view S.shift
 
 
-xmobar screen template commands = spawnPipe . intercalate " " $ options
+xmobar screen template commands = spawnPipe . unwords $ options
     where options = [ "xmobar"
                     , "-x"
                     , show screen
@@ -93,21 +92,21 @@ currentScreenID = (fromIntegral . S.screen . S.current) `fmap` gets windowset
 withDmenu :: String -> String -> String -> [String] -> X ()
 withDmenu dir src prg opt = do
   screen <- currentScreenID
-  let tmp = wrap "`" "`" . intercalate " " $ [ src
-                                             , "|"
-                                             , "dmenu"
-                                             , "-i"
-                                             , "-xs"
-                                             , show screen
-                                             ] ++ opt
-      cmd = intercalate " " [ "cd"
-                            , dir
-                            , "&&"
-                            , "tmp=" ++ tmp
-                            , "&&"
-                            , prg
-                            , "\"$tmp\""
-                            ]
+  let tmp = wrap "`" "`" . unwords $ [ src
+                                     , "|"
+                                     , "dmenu"
+                                     , "-i"
+                                     , "-xs"
+                                     , show screen
+                                     ] ++ opt
+      cmd = unwords [ "cd"
+                    , dir
+                    , "&&"
+                    , "tmp=" ++ tmp
+                    , "&&"
+                    , prg
+                    , "\"$tmp\""
+                    ]
   io . spawn $ cmd
 
 
