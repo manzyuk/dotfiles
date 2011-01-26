@@ -164,6 +164,9 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
+;;; HLint
+(require 'hs-lint)
+
 ;;; Ruby
 (autoload 'ruby-mode "ruby-mode" "Ruby mode." t)
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
