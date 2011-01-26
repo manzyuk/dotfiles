@@ -17,11 +17,11 @@ import XMonad.Util.Font                  (encodeOutput)
 import XMonad.Util.EZConfig              (additionalKeysP)
 import XMonad.Util.NamedWindows          (getName)
 
+import Data.Ord                          (comparing)
 import Data.List                         (intercalate, sortBy, isInfixOf)
 import Data.Maybe                        (isJust, catMaybes)
 import Data.Ratio                        ((%))
 import Data.Monoid                       (All(All), mappend)
-import Data.Function                     (on)
 
 import Control.Monad                     (when, zipWithM_, liftM2)
 
@@ -128,7 +128,7 @@ pp = defaultPP {
 
 
 myLogHook pps = do
-  screens <- (sortBy (compare `on` S.screen) . S.screens) `fmap` gets windowset
+  screens <- (sortBy (comparing S.screen) . S.screens) `fmap` gets windowset
   zipWithM_ dynamicLogWithPP' screens pps
 
 -- Extract the focused window from the stack of windows on the given screen.
