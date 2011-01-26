@@ -158,7 +158,7 @@ dynamicLogString' screen pp = do
   wt <- maybe (return "") (fmap show . getName) $ focusedWindow screen
 
   -- run extra loggers, ignoring any that generate errors.
-  extras <- mapM (`catchX` (return Nothing)) $ ppExtras pp
+  extras <- mapM (`catchX` return Nothing) $ ppExtras pp
 
   return $ encodeOutput . sepBy (ppSep pp) . ppOrder pp $
              [ ws
