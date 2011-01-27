@@ -156,35 +156,26 @@
 (command-frequency-autosave-mode 1)
 
 ;;; Enable reading/writing of comint input ring from/to a history file.
-(defun add-to-process-sentinel (proc hook)
-  "Add HOOK to the sentinel of PROC.  When PROC changes status,
-first call HOOK, then call the original sentinel of PROC."
-  (set-process-sentinel
-   proc
-   (lexical-let ((hook hook)
-                 (sentinel
-                  (or (process-sentinel proc)
-                      #'default-sentinel)))
-     (lambda (process event)
-       (funcall hook)
-       (funcall sentinel process event)))))
+(defun comint-write-history-on-exit (process event)
+  (comint-write-input-ring)
+  (let ((buf (process-buffer process)))
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (insert (format "\nProcess %s %s" process event))))))
 
-(defun default-sentinel (process event)
-  "The default sentinel that inserts a message in the process's
-buffer when the process status changes."
-  (when (buffer-name (process-buffer process))
-    (insert (format "\nProcess %s %s" process event))))
-
-(defun turn-on-comint-input-ring ()
-  "A hook that reads comint input ring from a history file when
-the process buffer is created, and saves it to the file on each
-process status change."
+(defun turn-on-comint-history ()
   (let ((process (get-buffer-process (current-buffer))))
     (when process
       (setq comint-input-ring-file-name
-            (format "~/.emacs.d/inferior-%s-history" (process-name process)))
+                (format "~/.emacs.d/inferior-%s-history" (process-name process)))
       (comint-read-input-ring)
-      (add-to-process-sentinel process 'comint-write-input-ring))))
+      (set-process-sentinel process #'comint-write-history-on-exit))))
+
+;;; If the buffer associated with a process is killed, the process's
+;;; sentinel is invoked when buffer-local variables  (in particular,
+;;; `comint-input-ring-file-name' and `comint-input-ring') are gone.
+;;; Therefore try to save the history every time a buffer is killed.
+(add-hook 'kill-buffer-hook 'comint-write-input-ring)
 
 ;;; Haskell
 (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode-2.8.0")
@@ -195,7 +186,7 @@ process status change."
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
-(add-hook 'inferior-haskell-mode-hook 'turn-on-comint-input-ring)
+(add-hook 'inferior-haskell-mode-hook 'turn-on-comint-history)
 
 ;;; HLint
 (require 'hs-lint)
@@ -206,7 +197,7 @@ process status change."
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (setq ruby-program-name "irb --inf-ruby-mode")
 
-(add-hook 'inferior-ruby-mode-hook 'turn-on-comint-input-ring)
+(add-hook 'inferior-ruby-mode-hook 'turn-on-comint-history)
 
 ;;; Add tab-completion to the inferior Ruby mode using `irb/completion'.
 (defun inferior-ruby-completions (stub)
