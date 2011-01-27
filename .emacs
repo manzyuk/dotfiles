@@ -155,6 +155,37 @@
 (command-frequency-mode 1)
 (command-frequency-autosave-mode 1)
 
+;;; Enable reading/writing of comint input ring from/to a history file.
+(defun add-to-process-sentinel (proc hook)
+  "Add HOOK to the sentinel of PROC.  When PROC changes status,
+first call HOOK, then call the original sentinel of PROC."
+  (set-process-sentinel
+   proc
+   (lexical-let ((hook hook)
+                 (sentinel
+                  (or (process-sentinel proc)
+                      #'default-sentinel)))
+     (lambda (process event)
+       (funcall hook)
+       (funcall sentinel process event)))))
+
+(defun default-sentinel (process event)
+  "The default sentinel that inserts a message in the process's
+buffer when the process status changes."
+  (when (buffer-name (process-buffer process))
+    (insert (format "\nProcess %s %s" process event))))
+
+(defun turn-on-comint-input-ring ()
+  "A hook that reads comint input ring from a history file when
+the process buffer is created, and saves it to the file on each
+process status change."
+  (let ((process (get-buffer-process (current-buffer))))
+    (when process
+      (setq comint-input-ring-file-name
+            (format "~/.emacs.d/inferior-%s-history" (process-name process)))
+      (comint-read-input-ring)
+      (add-to-process-sentinel process 'comint-write-input-ring))))
+
 ;;; Haskell
 (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode-2.8.0")
 (load "haskell-site-file")
@@ -164,6 +195,8 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
+(add-hook 'inferior-haskell-mode-hook 'turn-on-comint-input-ring)
+
 ;;; HLint
 (require 'hs-lint)
 
@@ -172,6 +205,8 @@
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (setq ruby-program-name "irb --inf-ruby-mode")
+
+(add-hook 'inferior-ruby-mode-hook 'turn-on-comint-input-ring)
 
 ;;; Add tab-completion to the inferior Ruby mode using `irb/completion'.
 (defun inferior-ruby-completions (stub)
