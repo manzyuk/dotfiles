@@ -12,6 +12,4 @@ xmodmap $HOME/.Xmodmap
 
 gnome-screensaver &
 
-urxvtd -q -f -o
-
 exec $HOME/.cabal/bin/xmonad

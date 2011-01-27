@@ -32,7 +32,7 @@ main = do
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
                focusFollowsMouse = False
              , borderWidth       = 2
-             , terminal          = "urxvtc"
+             , terminal          = "gnome-terminal"
              , modMask           = mod4Mask
              , logHook           = myLogHook [ pp { ppOutput = hPutStrLn xmobar0 }
                                              , pp { ppOutput = hPutStrLn xmobar1 }
