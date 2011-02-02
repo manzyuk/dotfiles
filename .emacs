@@ -55,6 +55,7 @@
  '(show-paren-mode t)
  '(tramp-default-method "ssh")
  '(uniquify-buffer-name-style (quote reverse) nil (uniquify))
+ '(user-mail-address "manzyuk@gmail.com")
  '(x-select-enable-clipboard t)
  '(x-select-enable-primary nil))
 (custom-set-faces
@@ -292,5 +293,21 @@
 
 ;;; Magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit-0.8.2")
+
 (require 'magit)
+
 (global-set-key "\C-cg" 'magit-status)
+
+;;; Enable sending email from Emacs using my GMail account.
+(setq send-mail-function 'smtpmail-send-it
+      message-send-mail-function 'smtpmail-send-it
+      smtpmail-starttls-credentials
+      '(("smtp.gmail.com" 587 nil nil))
+      smtpmail-auth-credentials
+      (expand-file-name "~/.authinfo")
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      smtpmail-debug-info t)
+
+(require 'smtpmail)
