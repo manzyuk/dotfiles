@@ -45,6 +45,7 @@
  '(menu-bar-mode nil)
  '(mouse-drag-copy-region nil)
  '(reftex-plug-into-AUCTeX t)
+ '(save-interprogram-paste-before-kill t)
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/.places")
  '(savehist-mode t nil (savehist))
