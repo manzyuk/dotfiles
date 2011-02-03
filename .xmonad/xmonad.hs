@@ -67,6 +67,8 @@ myManageHook = manageDocks <+> manageFloats <+> manageApps
           manageApps   = composeAll [ className =? "Emacs"         --> moveTo "1:edit"
                                     , className =? "Iceweasel"     --> moveTo "2:surf"
                                     , className =? "Google-chrome" --> moveTo "2:surf"
+                                    , className =? "XDvi"          --> moveTo "3:read"
+                                    , className =? "Xpdf"          --> moveTo "3:read"
                                     , className =? "Evince"        --> moveTo "3:read"
                                     , className =? "Pidgin"        --> moveTo "4:chat"
                                     , className =? "Rhythmbox"     --> moveTo "5:play"
