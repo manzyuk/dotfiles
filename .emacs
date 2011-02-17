@@ -314,3 +314,46 @@
       smtpmail-debug-info t)
 
 (require 'smtpmail)
+
+;;; Anything
+(add-to-list 'load-path "~/.emacs.d/site-lisp/anything-config")
+
+(require 'anything-config)
+(require 'anything-match-plugin)
+
+(setq anything-mp-match-source-name nil)
+(setq anything-mp-space-regexp "[\\][ ]")
+(setq anything-candidate-number-limit nil)
+
+(defun anything-library ()
+  (interactive)
+  (anything '(library-files)
+            nil
+            "View: "
+            nil
+            nil
+            "*library*"))
+
+(setq library-files
+      `((name       . ,(getenv "LIBRARY"))
+        (candidates . ,(shell-command-to-list "ls $LIBRARY"))
+        (action     . (("Open with Evince" . open-with-evince)))))
+
+(defun shell-command-to-list (command)
+  (split-string (shell-command-to-string command) "\n" t))
+
+(defun open-with-evince (name)
+  (shell-command (format "evince \"$LIBRARY/%s\" > /dev/null 2>&1 & disown" name)))
+
+(global-set-key "\C-cl" 'anything-library)
+
+;;; Make `async-shell-command' more useful: supress (redirect to
+;;; /dev/null) all output and errors and disown the process.
+(defun async-shell-command (command)
+  (interactive
+   (list
+    (read-shell-command "Run: " nil nil
+                        (and buffer-file-name
+                             (file-relative-name buffer-file-name)))))
+  (setq command (concat command " > /dev/null 2>&1 & disown"))
+  (shell-command command))
