@@ -280,6 +280,15 @@
 (setq org-capture-templates
       '(("t" "TODO" entry (file "~/org/todo.org") "* TODO %?")))
 
+(defun org-mode-flyspell-verify ()
+  (save-excursion
+    (beginning-of-line)
+    (not (looking-at "^\s*#\\+\\(BEGIN\\|END\\)_.*$"))))
+
+(add-hook 'org-mode
+          (lambda () (setq flyspell-generic-check-word-predicate
+                           'org-mode-flyspell-verify)))
+
 ;;; Magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit-0.8.2")
 
