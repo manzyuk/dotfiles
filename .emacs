@@ -252,7 +252,6 @@
 (require 'reftex)
 
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 ;;; Org-mode
 (add-to-list 'load-path "~/.emacs.d/site-lisp/org-7.3/lisp")
