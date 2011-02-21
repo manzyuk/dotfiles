@@ -24,7 +24,6 @@
  '(desktop-base-lock-name ".desktop.lock")
  '(desktop-path (quote ("~/.emacs.d")))
  '(desktop-save-mode t)
- '(eshell-output-filter-functions (quote (eshell-handle-ansi-color eshell-watch-for-password-prompt eshell-postoutput-scroll-to-bottom eshell-handle-control-codes eshell-handle-ansi-color eshell-watch-for-password-prompt)))
  '(font-latex-fontify-script nil)
  '(font-latex-fontify-sectioning (quote color))
  '(font-latex-script-display (quote (nil)))
@@ -162,11 +161,6 @@
 (setenv "PAGER" "cat")
 (setenv "GEM_HOME" "/home/manzyuk/.gems")
 (setenv "BIBINPUTS" "/home/manzyuk/texmf/bibtex/bib")
-
-;;; `eshell' cannot handle `ssh' properly, fall back to `ansi-term' instead.
-(add-hook 'eshell-first-time-mode-hook
-          (lambda ()
-            (add-to-list 'eshell-visual-commands "ssh")))
 
 ;;; Enable `dired-find-alternate-file'.
 (put 'dired-find-alternate-file 'disabled nil)
