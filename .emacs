@@ -172,13 +172,6 @@
 ;;; Don't use spaces instead of tabs in makefiles.
 (add-hook 'makefile-gmake-mode (lambda () (setq indent-tabs-mode t)))
 
-;;; Enable command frequency tracking.
-(add-to-list 'load-path "~/.emacs.d/site-lisp")
-(require 'command-frequency)
-(command-frequency-table-load)
-(command-frequency-mode 1)
-(command-frequency-autosave-mode 1)
-
 ;;; Enable reading/writing of comint input ring from/to a history file.
 (defun comint-write-history-on-exit (process event)
   (comint-write-input-ring)
