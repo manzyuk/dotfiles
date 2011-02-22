@@ -194,6 +194,21 @@
 ;;; Therefore try to save the history every time a buffer is killed.
 (add-hook 'kill-buffer-hook 'comint-write-input-ring)
 
+(defun mapc-buffers (fn)
+  (mapc (lambda (buffer)
+          (with-current-buffer buffer
+            (funcall fn)))
+        (buffer-list)))
+
+(defun comint-write-input-ring-all-buffers ()
+  (mapc-buffers 'comint-write-input-ring))
+
+;;; Apparently, when Emacs is killed, `kill-buffer-hook' is not run
+;;; on individual buffers.  We circumvent that by adding a hook to
+;;; `kill-emacs-hook' that walks the list of all buffers and writes
+;;; the input ring (if it is available) of each buffer to a file.
+(add-hook 'kill-emacs-hook 'comint-write-input-ring-all-buffers)
+
 ;;; Haskell
 (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode-2.8.0")
 (load "haskell-site-file")
