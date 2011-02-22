@@ -31,7 +31,7 @@
  '(icomplete-mode t)
  '(ido-enable-flex-matching t)
  '(ido-everywhere t)
- '(ido-mode (quote buffer) nil (ido))
+ '(ido-mode (quote both) nil (ido))
  '(ido-save-directory-list-file "~/.emacs.d/.ido")
  '(ido-show-dot-for-dired t)
  '(indent-tabs-mode nil)
