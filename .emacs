@@ -205,6 +205,7 @@
 (add-hook 'inferior-haskell-mode-hook 'turn-on-comint-history)
 
 ;;; HLint
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
 (require 'hs-lint)
 
 ;;; Ruby
@@ -329,16 +330,16 @@
             nil
             "*library*"))
 
-(setq library-files
-      `((name       . ,(getenv "LIBRARY"))
-        (candidates . ,(shell-command-to-list "ls $LIBRARY"))
-        (action     . (("Open with Evince" . open-with-evince)))))
-
 (defun shell-command-to-list (command)
   (split-string (shell-command-to-string command) "\n" t))
 
 (defun open-with-evince (name)
   (shell-command (format "evince \"$LIBRARY/%s\" > /dev/null 2>&1 & disown" name)))
+
+(setq library-files
+      `((name       . ,(getenv "LIBRARY"))
+        (candidates . ,(shell-command-to-list "ls $LIBRARY"))
+        (action     . (("Open with Evince" . open-with-evince)))))
 
 (global-set-key "\C-cl" 'anything-library)
 
