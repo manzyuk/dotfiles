@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-xrandr --output HDMI-0 --mode 1920x1200 --output DVI-0 --mode 1920x1200 --right-of HDMI-0
+xrandr --output HDMI-0 --mode 1920x1200 --output DVI-0 --primary --mode 1920x1200 --left-of HDMI-0
 
 xsetroot -display $DISPLAY -cursor_name 'left_ptr' -solid black
 
