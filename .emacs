@@ -166,8 +166,8 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;;; text-mode hooks (log-edit-mode inherits these from text-mode).
-(add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
-(add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook 'turn-on-flyspell)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;; Don't use spaces instead of tabs in makefiles.
 (add-hook 'makefile-gmake-mode (lambda () (setq indent-tabs-mode t)))
