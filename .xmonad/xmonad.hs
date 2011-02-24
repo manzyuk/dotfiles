@@ -32,19 +32,20 @@ main = do
   xmobar0 <- xmobar 0 "%StdinReader%}{"       "[Run StdinReader]"
   xmobar1 <- xmobar 1 "%StdinReader%}{%date%" "[Run StdinReader, Run Date \"%a %b %_d, %H:%M\" \"date\" 10]"
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
-               focusFollowsMouse = False
-             , borderWidth       = 1
-             , focusedBorderColor       = "LightSkyBlue"
-             , terminal          = "gnome-terminal"
-             , modMask           = mod4Mask
-             , logHook           = myLogHook [ pp { ppOutput = hPutStrLn xmobar0 }
-                                             , pp { ppOutput = hPutStrLn xmobar1 }
-                                             ]
-             , workspaces        = myWorkspaces
-             , layoutHook        = myLayoutHook
-             , manageHook        = myManageHook
-             , startupHook       = setWMName "LG3D"
-             , handleEventHook   = fullscreenEventHook `mappend` handleEventHook defaultConfig
+               focusFollowsMouse  = False
+             , borderWidth        = 1
+             , focusedBorderColor = "#386890"
+             , normalBorderColor  = "#555555"
+             , terminal           = "gnome-terminal"
+             , modMask            = mod4Mask
+             , logHook            = myLogHook [ pp { ppOutput = hPutStrLn xmobar0 }
+                                              , pp { ppOutput = hPutStrLn xmobar1 }
+                                              ]
+             , workspaces         = myWorkspaces
+             , layoutHook         = myLayoutHook
+             , manageHook         = myManageHook
+             , startupHook        = setWMName "LG3D"
+             , handleEventHook    = fullscreenEventHook `mappend` handleEventHook defaultConfig
              }
              `additionalKeysP`
              [ ("M-p", withDmenu "." "dmenu_path" "exec" ["-p", "'Run:'"])
@@ -69,8 +70,8 @@ myLayoutHook = avoidStruts
 
 myTheme = defaultTheme {
             activeColor         = "SteelBlue"
-          , activeBorderColor   = "LightSkyBlue"
-          , inactiveBorderColor = normalBorderColor defaultConfig
+          , activeBorderColor   = "#386890"
+          , inactiveBorderColor = "#555555"
           }
 
 
