@@ -4,7 +4,9 @@ import qualified XMonad.StackSet as S
 import XMonad.Layout.IM
 import XMonad.Layout.Reflect             (reflectHoriz)
 import XMonad.Layout.NoBorders           (smartBorders)
+import XMonad.Layout.Decoration
 import XMonad.Layout.PerWorkspace        (onWorkspace)
+import XMonad.Layout.NoFrillsDecoration
 
 import XMonad.Hooks.SetWMName            (setWMName)
 import XMonad.Hooks.DynamicLog    hiding (xmobar)
@@ -32,6 +34,7 @@ main = do
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
                focusFollowsMouse = False
              , borderWidth       = 2
+             , focusedBorderColor       = "LightSkyBlue"
              , terminal          = "gnome-terminal"
              , modMask           = mod4Mask
              , logHook           = myLogHook [ pp { ppOutput = hPutStrLn xmobar0 }
@@ -56,8 +59,19 @@ main = do
 myWorkspaces = ["1:edit", "2:surf", "3:read", "4:chat", "5:play", "6:misc", "7:misc", "8:misc", "9:misc"]
 
 
-myLayoutHook = avoidStruts $ smartBorders $ onWorkspace "4:chat" pidginLayout $ layoutHook defaultConfig
+myLayoutHook = avoidStruts
+             $ smartBorders
+             $ noFrillsDeco shrinkText myTheme
+             $ onWorkspace "4:chat" pidginLayout
+             $ layoutHook defaultConfig
     where pidginLayout = reflectHoriz $ withIM (1/7) (Role "buddy_list") Full
+
+
+myTheme = defaultTheme {
+            activeColor         = "SteelBlue"
+          , activeBorderColor   = "LightSkyBlue"
+          , inactiveBorderColor = normalBorderColor defaultConfig
+          }
 
 
 myManageHook = manageDocks <+> manageFloats <+> manageApps
@@ -115,7 +129,7 @@ withDmenu dir src prg opt = do
 
 pp = defaultPP {
        ppHiddenNoWindows = xmobarColor "DimGray"      ""            . pad
-     , ppCurrent         = xmobarColor "White"        "DimGray"     . pad
+     , ppCurrent         = xmobarColor "White"        "SeaGreen"    . pad
      , ppVisible         = pad
      , ppHidden          = pad
      , ppUrgent          = xmobarColor ""             "LightSalmon"       . xmobarStrip
@@ -123,11 +137,13 @@ pp = defaultPP {
      , ppTitle           = xmobarColor "PaleGreen"    ""            . pad . shorten 200
      , ppWsSep           = ""
      , ppSep             = ""
+     , ppOrder           = \(ws:l:_:rest) -> (ws:l:rest)
      }
-    where iconify "Tall"                   = "[|]"
-          iconify "Mirror Tall"            = "[-]"
-          iconify l | "Full" `isInfixOf` l = "[ ]"
-          iconify _                        = "[?]"
+    where
+      iconify l | "Mirror" `isInfixOf` l = "[-]"
+      iconify l | "Tall"   `isInfixOf` l = "[|]"
+      iconify l | "Full"   `isInfixOf` l = "[ ]"
+      iconify _                          = "[?]"
 
 
 myLogHook pps = do
