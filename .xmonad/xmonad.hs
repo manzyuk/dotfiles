@@ -33,7 +33,7 @@ main = do
   xmobar1 <- xmobar 1 "%StdinReader%}{%date%" "[Run StdinReader, Run Date \"%a %b %_d, %H:%M\" \"date\" 10]"
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
                focusFollowsMouse = False
-             , borderWidth       = 2
+             , borderWidth       = 1
              , focusedBorderColor       = "LightSkyBlue"
              , terminal          = "gnome-terminal"
              , modMask           = mod4Mask
