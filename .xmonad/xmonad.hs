@@ -72,6 +72,7 @@ myTheme = defaultTheme {
             activeColor         = "SteelBlue"
           , activeBorderColor   = "#386890"
           , inactiveBorderColor = "#555555"
+          , fontName            = "xft:DejaVu Sans-10:bold"
           }
 
 
