@@ -356,7 +356,7 @@
         (candidates . ,(shell-command-to-list "ls $LIBRARY"))
         (action     . (("Open with Evince" . open-with-evince)))))
 
-(global-set-key "\C-cl" 'anything-library)
+(global-set-key "\C-cv" 'anything-library)
 
 ;;; Make `async-shell-command' more useful: supress (redirect to
 ;;; /dev/null) all output and errors and disown the process.
