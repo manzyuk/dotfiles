@@ -36,7 +36,9 @@ def translate(text, sl="en", tl="ru")
   end
 end
 
-if ARGV.length == 1
+if ARGV.size == 0
+  ARGF.each {|line| translate(line)}
+elsif ARGV.size == 1
   translate(ARGV[0])
 else
   puts "Usage: translate TEXT"
