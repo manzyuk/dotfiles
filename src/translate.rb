@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-# Usage: ruby translate.rb word
+# Usage: ruby translate.rb text
 #
-# Translate word from English to Russian using Google Translate.
+# Translate text from English to Russian using Google Translate.
 
 require 'open-uri'
 require 'json'
@@ -15,27 +15,29 @@ def page(url)
 end
 
 def translate(text, sl="en", tl="ru")
-  baseURL    = "http://translate.google.com/translate_a/t"
-  parameters = [["client", "t"], ["text", text], ["sl", sl], ["tl", tl]]
-  requestURL = baseURL + "?" + parameters.map {|p| "#{p[0]}=#{URI.escape(p[1])}"}.join("&")
+  baseURL     = "http://translate.google.com/translate_a/t"
+  parameters  = [["client", "t"], ["text", text], ["sl", sl], ["tl", tl]]
+  requestURL  = baseURL + "?" + parameters.map {|p| "#{p[0]}=#{URI.escape(p[1])}"}.join("&")
   # Deal with invalid (obfuscated?) JSON that Google sends us back.
-  content    = page(requestURL).gsub(/,(?=[\],])/, ",null")
-  dictionary = JSON.parse(content)[1]
+  contents    = page(requestURL).gsub(/,(?=[\],])/, ",null")
+  json        = JSON.parse(contents)
+  dictionary  = json[1]
+  translation = json[0][0][0]
   if dictionary
     dictionary.each do |item|
-      print item[0], "\n"
+      puts item[0]
       item[1].each_with_index do |translation, index|
         printf("%2d. %s\n", index+1, translation)
       end
-      print "\n"
+      puts
     end
   else
-    printf("No translations found for \"%s\".\n", text)
+    puts translation
   end
 end
 
 if ARGV.length == 1
   translate(ARGV[0])
 else
-  puts "Usage: translate WORD"
+  puts "Usage: translate TEXT"
 end
