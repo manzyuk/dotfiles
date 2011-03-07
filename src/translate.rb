@@ -22,24 +22,22 @@ def translate(text, sl="en", tl="ru")
   contents    = page(requestURL).gsub(/,(?=[\],])/, ",null")
   json        = JSON.parse(contents)
   dictionary  = json[1]
-  translation = json[0][0][0]
   if dictionary
-    dictionary.each do |item|
-      puts item[0]
-      item[1].each_with_index do |translation, index|
-        printf("%2d. %s\n", index+1, translation)
-      end
-      puts
-    end
+    dictionary.map do |item|
+      index = 0
+      item[1].map do |translation|
+        sprintf("%2d. %s", index+=1, translation)
+      end.unshift(item[0]).join("\n")
+    end.join("\n\n")
   else
-    puts translation
+    json[0][0][0]
   end
 end
 
 if ARGV.size == 0
   ARGF.each {|line| translate(line)}
 elsif ARGV.size == 1
-  translate(ARGV[0])
+  puts translate(ARGV[0])
 else
   puts "Usage: translate TEXT"
 end
