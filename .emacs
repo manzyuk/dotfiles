@@ -127,6 +127,9 @@
 
 (global-set-key "\M-/" 'hippie-expand)
 
+;;; Automatically make scripts starting with #! executable.
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
 ;;; Fix colors in shell.
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
