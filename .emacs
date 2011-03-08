@@ -291,7 +291,7 @@
         ("phone"    . ?p)
         ("computer" . ?c)))
 
-(setq org-tags-column -80)
+(setq org-tags-column -90)
 
 (setq org-capture-templates
       '(("t" "TODO" entry (file "~/org/todo.org") "* TODO %?")))
