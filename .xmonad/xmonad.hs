@@ -84,6 +84,7 @@ myManageHook = manageDocks <+> manageFloats <+> manageApps
                                     , className =? "Iceweasel"     --> moveTo "2:surf"
                                     , className =? "Google-chrome" --> moveTo "2:surf"
                                     , className =? "X-www-browser" --> moveTo "2:surf"
+                                    , className =? "GV"            --> moveTo "3:read"
                                     , className =? "XDvi"          --> moveTo "3:read"
                                     , className =? "Xpdf"          --> moveTo "3:read"
                                     , className =? "Evince"        --> moveTo "3:read"
