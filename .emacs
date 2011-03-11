@@ -173,7 +173,7 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;; Don't use spaces instead of tabs in makefiles.
-(add-hook 'makefile-gmake-mode (lambda () (setq indent-tabs-mode t)))
+(add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 
 ;;; Enable reading/writing of comint input ring from/to a history file.
 (defun comint-write-history-on-exit (process event)
