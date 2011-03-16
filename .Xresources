@@ -1,6 +1,7 @@
 URxvt*scrollBar: False
 URxvt*font: -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso10646-1
-URxvt*reverseVideo: True
+URxvt*background: #2B2B2B
+URxvt*foreground: #DEDEDE
 
 ! Tango color theme a la gnome-terminal
 URxvt*color0:  #000000
@@ -20,12 +21,13 @@ URxvt*color13: #AD7FA8
 URxvt*color14: #34E2E2
 URxvt*color15: #EEEEEC
 
-!Emacs.font: -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso10646-1
 Emacs.FontBackend: xft
 Emacs.font: Monospace-11
-!Emacs.reverseVideo: on
+Emacs.reverseVideo: on
+Emacs.background: #DEDEDE
+Emacs.foreground: #2B2B2B
+Emacs.cursorColor: #2B2B2B
 Emacs.menuBar: off
-!Emacs.verticalScrollBars: off
 Emacs.toolBar: 0
 Emacs.borderWidth: 0
 Emacs.internalBorder: 0

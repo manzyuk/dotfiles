@@ -9,6 +9,7 @@
  '(TeX-source-correlate-method (quote source-specials))
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t)
+ '(ansi-color-names-vector ["#555753" "#ef2929" "#8ae234" "#fce94f" "#729fcf" "#ad7fa8" "#34e2e2" "#eeeeec"])
  '(before-save-hook (quote (whitespace-cleanup)))
  '(bookmark-default-file "~/.emacs.d/.bookmarks")
  '(column-number-mode t)
@@ -63,7 +64,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(fringe ((((class color) (background dark)) (:background "grey20")))))
 
 ;;; Disable the 3D highlighting of the mode line.
 (set-face-attribute 'mode-line nil :box nil)
@@ -79,30 +80,30 @@
 
 (setq ibuffer-saved-filter-groups
       (quote (("default"
-	       ("Dired"
-		(mode . dired-mode))
-	       ("Emacs"
-		(or
-		 (mode . help-mode)
-		 (mode . Info-mode)
-		 (mode . shell-mode)
-		 (mode . Custom-mode)
-		 (mode . apropos-mode)
-		 (mode . emacs-lisp-mode)
-		 (mode . completion-list-mode)
-		 (name . "^\\*scratch\\*$")
-		 (name . "^\\*Messages\\*$")))
-	       ("LaTeX"
-		(or
-		 (mode . latex-mode)))
-	       ("Haskell"
-		(or
-		 (mode . haskell-mode)
-		 (mode . inferior-haskell-mode)))))))
+               ("Dired"
+                (mode . dired-mode))
+               ("Emacs"
+                (or
+                 (mode . help-mode)
+                 (mode . Info-mode)
+                 (mode . shell-mode)
+                 (mode . Custom-mode)
+                 (mode . apropos-mode)
+                 (mode . emacs-lisp-mode)
+                 (mode . completion-list-mode)
+                 (name . "^\\*scratch\\*$")
+                 (name . "^\\*Messages\\*$")))
+               ("LaTeX"
+                (or
+                 (mode . latex-mode)))
+               ("Haskell"
+                (or
+                 (mode . haskell-mode)
+                 (mode . inferior-haskell-mode)))))))
 
 (add-hook 'ibuffer-mode-hook
-	  (lambda ()
-	    (ibuffer-switch-to-saved-filter-groups "default")))
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;;; Make mouse middle-click only paste from primary X11 selection,
 ;;; not clipboard and kill ring.
@@ -117,13 +118,13 @@
 ;;; Replace `dabbrev-expand' with `hippie-expand'.
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev
-	try-expand-dabbrev-all-buffers
-	try-expand-dabbrev-from-kill
-	try-complete-file-name-partially
-	try-complete-file-name
-	try-complete-lisp-symbol-partially
-	try-complete-lisp-symbol
-	try-expand-whole-kill))
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-file-name-partially
+        try-complete-file-name
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol
+        try-expand-whole-kill))
 
 (global-set-key "\M-/" 'hippie-expand)
 
@@ -151,12 +152,12 @@
 
 (defun filter-non-sgr-control-sequences-in-output (ignored)
   (let ((start-marker (or comint-last-output-start
-			  (point-min-marker)))
-	(end-marker (process-mark (get-buffer-process (current-buffer)))))
+                          (point-min-marker)))
+        (end-marker (process-mark (get-buffer-process (current-buffer)))))
     (filter-non-sgr-control-sequences-in-region start-marker end-marker)))
 
 (add-hook 'comint-output-filter-functions
-	  'filter-non-sgr-control-sequences-in-output)
+          'filter-non-sgr-control-sequences-in-output)
 
 ;;; Set environment variables.
 (setenv "EDITOR" "emacsclient")
@@ -181,13 +182,13 @@
   (let ((buf (process-buffer process)))
     (when (buffer-live-p buf)
       (with-current-buffer buf
-	(insert (format "\nProcess %s %s" process event))))))
+        (insert (format "\nProcess %s %s" process event))))))
 
 (defun turn-on-comint-history ()
   (let ((process (get-buffer-process (current-buffer))))
     (when process
       (setq comint-input-ring-file-name
-		(format "~/.emacs.d/inferior-%s-history" (process-name process)))
+                (format "~/.emacs.d/inferior-%s-history" (process-name process)))
       (comint-read-input-ring)
       (set-process-sentinel process #'comint-write-history-on-exit))))
 
@@ -199,9 +200,9 @@
 
 (defun mapc-buffers (fn)
   (mapc (lambda (buffer)
-	  (with-current-buffer buffer
-	    (funcall fn)))
-	(buffer-list)))
+          (with-current-buffer buffer
+            (funcall fn)))
+        (buffer-list)))
 
 (defun comint-write-input-ring-all-buffers ()
   (mapc-buffers 'comint-write-input-ring))
@@ -237,14 +238,14 @@
 (defun inferior-ruby-completions (stub)
   "Return a list of completions for the line of Ruby code starting with STUB."
   (let* ((process (get-buffer-process ruby-buffer))
-	 (comint-filter (process-filter process))
-	 (kept "")
-	 completions)
+         (comint-filter (process-filter process))
+         (kept "")
+         completions)
     (set-process-filter process
-			(lambda (proc string)
-			  (setf kept (concat kept string))))
+                        (lambda (proc string)
+                          (setf kept (concat kept string))))
     (process-send-string process
-			 (format "puts IRB::InputCompletor::CompletionProc.call('%s').compact\n" stub))
+                         (format "puts IRB::InputCompletor::CompletionProc.call('%s').compact\n" stub))
     (while (not (string-match inferior-ruby-prompt-pattern kept))
       (accept-process-output process))
     (when (string-match "^[[:alpha:]]+?Error: " kept)
@@ -257,12 +258,12 @@
   "Complete Ruby code at point."
   (interactive)
   (let* ((stub (thing-at-point 'line))
-	 (completions (inferior-ruby-completions stub)))
+         (completions (inferior-ruby-completions stub)))
     (comint-dynamic-simple-complete stub completions)))
 
 (add-hook 'inferior-ruby-mode-hook
-	  (lambda ()
-	    (define-key inferior-ruby-mode-map (kbd "TAB") 'inferior-ruby-complete)))
+          (lambda ()
+            (define-key inferior-ruby-mode-map (kbd "TAB") 'inferior-ruby-complete)))
 
 ;;; Scheme
 (setq scheme-program-name "/home/manzyuk/bin/mit-scheme")
@@ -292,10 +293,10 @@
 
 (setq org-tag-alist
       '(("work"     . ?w)
-	("home"     . ?h)
-	("email"    . ?e)
-	("phone"    . ?p)
-	("computer" . ?c)))
+        ("home"     . ?h)
+        ("email"    . ?e)
+        ("phone"    . ?p)
+        ("computer" . ?c)))
 
 (setq org-tags-column -90)
 
@@ -346,11 +347,11 @@
 (defun anything-library ()
   (interactive)
   (anything '(library-files)
-	    nil
-	    "View: "
-	    nil
-	    nil
-	    "*library*"))
+            nil
+            "View: "
+            nil
+            nil
+            "*library*"))
 
 (defun shell-command-to-list (command)
   (split-string (shell-command-to-string command) "\n" t))
@@ -360,8 +361,8 @@
 
 (setq library-files
       `((name       . ,(getenv "LIBRARY"))
-	(candidates . ,(shell-command-to-list "ls $LIBRARY"))
-	(action     . (("Open with Evince" . open-with-evince)))))
+        (candidates . ,(shell-command-to-list "ls $LIBRARY"))
+        (action     . (("Open with Evince" . open-with-evince)))))
 
 (global-set-key "\C-cv" 'anything-library)
 
@@ -371,8 +372,8 @@
   (interactive
    (list
     (read-shell-command "Run: " nil nil
-			(and buffer-file-name
-			     (file-relative-name buffer-file-name)))))
+                        (and buffer-file-name
+                             (file-relative-name buffer-file-name)))))
   (setq command (concat command " > /dev/null 2>&1 & disown"))
   (shell-command command))
 
