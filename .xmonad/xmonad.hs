@@ -132,7 +132,7 @@ withDmenu dir src prg opt = do
 
 pp = defaultPP {
        ppHiddenNoWindows = xmobarColor "DimGray"      ""            . pad
-     , ppCurrent         = xmobarColor "White"        "SeaGreen"    . pad
+     , ppCurrent         = xmobarColor "White"        "#555555"     . pad
      , ppVisible         = pad
      , ppHidden          = pad
      , ppUrgent          = xmobarColor ""             "LightSalmon"       . xmobarStrip
