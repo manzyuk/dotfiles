@@ -64,7 +64,8 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(fringe ((((class color) (background dark)) (:background "grey20")))))
+ '(fringe ((((class color) (background dark)) (:background "grey20"))))
+ '(region ((((class color) (min-colors 88) (background dark)) (:background "grey30")))))
 
 ;;; Disable the 3D highlighting of the mode line.
 (set-face-attribute 'mode-line nil :box nil)
