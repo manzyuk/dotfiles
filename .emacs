@@ -138,12 +138,15 @@
 (defun regexp-alternatives (regexps)
   (mapconcat (lambda (regexp) (concat "\\(" regexp "\\)")) regexps "\\|"))
 
-(defvar non-sgr-control-sequence-regexp
-  (regexp-alternatives
-   '("\033\\[\\??[0-9;]*[^0-9;m]"      ; non-SGR CSI escape sequences
-     "\033\\][0-2];.*?\007"            ; icon name escape sequences
-     ))
+(defvar non-sgr-control-sequence-regexp nil
   "Regexp that matches non-SGR control sequences.")
+
+(setq non-sgr-control-sequence-regexp
+      (regexp-alternatives
+       '("\033\\[\\??[0-9;]*[^0-9;m]"   ; non-SGR CSI escape sequences
+         "\033\\][0-2];.*?\007"         ; icon name escape sequences
+         "\012\033\\[2K\033\\[1F"       ; noop
+         )))
 
 (defun filter-non-sgr-control-sequences-in-region (begin end)
   (save-excursion
@@ -159,6 +162,57 @@
 
 (add-hook 'comint-output-filter-functions
           'filter-non-sgr-control-sequences-in-output)
+
+;;; Copied from `ansi-color.el' and modified to support high intensity colors.
+(defun ansi-color-make-color-map ()
+  "Creates a vector of face definitions and returns it.
+
+The index into the vector is an ANSI code.  See the documentation of
+`ansi-color-map' for an example.
+
+The face definitions are based upon the variables
+`ansi-color-faces-vector' and `ansi-color-names-vector'."
+  (let ((ansi-color-map (make-vector 110 nil))
+        (index 0))
+    ;; miscellaneous attributes
+    (mapc
+     (function (lambda (e)
+                 (aset ansi-color-map index e)
+                 (setq index (1+ index)) ))
+     ansi-color-faces-vector)
+    ;; foreground attributes
+    (setq index 30)
+    (mapc
+     (function (lambda (e)
+                 (aset ansi-color-map index
+                       (ansi-color-make-face 'foreground e))
+                 (setq index (1+ index)) ))
+     ansi-color-names-vector)
+    ;; background attributes
+    (setq index 40)
+    (mapc
+     (function (lambda (e)
+                 (aset ansi-color-map index
+                       (ansi-color-make-face 'background e))
+                 (setq index (1+ index)) ))
+     ansi-color-names-vector)
+    ;; foreground attributes -- high intensity
+    (setq index 90)
+    (mapc
+     (function (lambda (e)
+                 (aset ansi-color-map index
+                       (ansi-color-make-face 'foreground e))
+                 (setq index (1+ index)) ))
+     ansi-color-names-vector)
+    ;; background attributes -- high intensity
+    (setq index 100)
+    (mapc
+     (function (lambda (e)
+                 (aset ansi-color-map index
+                       (ansi-color-make-face 'background e))
+                 (setq index (1+ index)) ))
+     ansi-color-names-vector)
+    ansi-color-map))
 
 ;;; Set environment variables.
 (setenv "EDITOR" "emacsclient")
