@@ -8,7 +8,6 @@ xset -dpms
 xset s off
 
 xrdb -load $HOME/.Xresources
-xmodmap $HOME/.Xmodmap
 
 gnome-screensaver &
 
