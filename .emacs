@@ -358,15 +358,19 @@ The face definitions are based upon the variables
 (setq org-capture-templates
       '(("t" "TODO" entry (file "~/org/todo.org") "* TODO %?")))
 
-(defun org-mode-in-block-delimiter-p ()
-  (save-excursion
-    (beginning-of-line)
-    (looking-at "^\s*#\\+\\(BEGIN\\|END\\)_.*$")))
+(eval-after-load "org"
+  '(progn
+     (defun org-mode-in-block-delimiter-p ()
+       (save-excursion
+         (beginning-of-line)
+         (looking-at "^\s*#\\+\\(BEGIN\\|END\\)_.*$")))
 
-(defun org-mode-flyspell-verify ()
-  (and (not (get-text-property (max (1- (point)) (point-min)) 'keymap))
-       (not (get-text-property (max (1- (point)) (point-min)) 'org-no-flyspell))
-       (not (org-mode-in-block-delimiter-p))))
+     (defun org-mode-flyspell-verify ()
+       (and (not (get-text-property (max (1- (point)) (point-min)) 'keymap))
+            (not (get-text-property (max (1- (point)) (point-min)) 'org-no-flyspell))
+            ;; don't check spelling inside code blocks and block delimiters
+            (not (eql (get-text-property (max (1- (point)) (point-min)) 'face) 'org-block))
+            (not (org-mode-in-block-delimiter-p))))))
 
 ;;; Magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit-0.8.2")
