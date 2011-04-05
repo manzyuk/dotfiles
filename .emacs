@@ -65,9 +65,6 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(fringe ((((class color) (background dark)) (:background "grey20"))))
- '(magit-diff-add ((((class color) (background dark)) (:foreground "#8ae234"))))
- '(magit-diff-del ((((class color) (background dark)) (:foreground "#555753"))))
- '(magit-diff-hunk-header ((t (:inherit magit-header :foreground "#34e2e2"))))
  '(region ((((class color) (min-colors 88) (background dark)) (:background "grey30")))))
 
 ;;; Disable the 3D highlighting of the mode line.
