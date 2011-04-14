@@ -278,6 +278,21 @@ The face definitions are based upon the variables
 ;;; the input ring (if it is available) of each buffer to a file.
 (add-hook 'kill-emacs-hook 'comint-write-input-ring-all-buffers)
 
+;;; For some reason, sometimes on startup Emacs does not detect the
+;;; major mode of some files.  For example, all *.hs files are in
+;;; the fundamental mode.  Restarting Emacs does not help as it
+;;; records major modes of all buffers.  What does help is to close
+;;; affected files and to open them again; this function then saves
+;;; some typing in the scratch buffer.
+(defun revisit-all-files ()
+  (interactive)
+  (mapc-buffers
+   (lambda ()
+     (let ((file-name (buffer-file-name)))
+       (when file-name
+         (kill-buffer)
+         (find-file file-name))))))
+
 ;;; Haskell
 (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode-2.8.0")
 (load "haskell-site-file")
