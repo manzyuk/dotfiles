@@ -100,6 +100,7 @@
                ("Haskell"
                 (or
                  (mode . haskell-mode)
+                 (mode . literate-haskell-mode)
                  (mode . inferior-haskell-mode)))))))
 
 (add-hook 'ibuffer-mode-hook
@@ -277,6 +278,8 @@ The face definitions are based upon the variables
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 (add-hook 'inferior-haskell-mode-hook 'turn-on-comint-history)
+
+(set-default 'haskell-literate-default 'tex)
 
 ;;; HLint
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
