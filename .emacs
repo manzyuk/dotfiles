@@ -300,6 +300,10 @@ The face definitions are based upon the variables
 (autoload 'haskell-mode "haskell-mode" "Haskell mode." t)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-subword-mode)
+
+(defun turn-on-subword-mode ()
+  (subword-mode 1))
 
 (add-hook 'inferior-haskell-mode-hook 'turn-on-comint-history)
 
