@@ -404,7 +404,7 @@ The face definitions are based upon the variables
             (not (org-mode-in-block-delimiter-p))))))
 
 ;;; Magit
-(add-to-list 'load-path "~/.emacs.d/site-lisp/magit-0.8.2")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/magit-1.0.0")
 
 (require 'magit)
 
