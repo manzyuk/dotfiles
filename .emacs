@@ -428,36 +428,6 @@ The face definitions are based upon the variables
 
 (require 'smtpmail)
 
-(setq gnus-directory "~/Mail")
-
-;;; Insidious Big Brother Database
-(require 'bbdb)
-(bbdb-initialize 'gnus 'message)
-
-(setq bbdb/gnus-summary-prefer-bbdb-data t)
-(setq bbdb/gnus-summary-prefer-real-names 'bbdb)
-
-(setq message-expand-name-databases '(bbdb))
-
-(setq bbdb-offer-save 1
-      bbdb-use-pop-up nil
-      bbdb-electric-p t
-      bbdb-dwim-net-address-allow-redundancy t
-      bbdb-quiet-about-name-mismatches nil
-      bbdb-silent-running t
-      bbdb-always-add-addresses t
-      bbdb-use-alternate-names t
-      bbdb-new-nets-always-primary t
-      bbdb-canonicalize-redundant-nets-p t
-      bbdb-complete-name-allow-cycling t
-      bbbd-message-caching-enabled t
-      bbdb/news-auto-create-p 'bbdb-ignore-some-messages-hook
-      bbdb-ignore-some-messages-alist
-      ;; NOTE: there can be only one entry per header (such as To, From)
-      ;; http://flex.ee.uec.ac.jp/texi/bbdb/bbdb_11.html
-      '(("From" . "no.?reply\\|DAEMON\\|daemon\\|LIST\\|list")
-	("To" . "LIST\\|list")))
-
 ;;; Anything
 (add-to-list 'load-path "~/.emacs.d/site-lisp/anything-config")
 
