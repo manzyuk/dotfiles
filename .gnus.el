@@ -38,8 +38,3 @@
 (setq mm-discouraged-alternatives
       '("text/html"
 	"text/richtext"))
-
-(setq gnus-window-configuration
-      '((summary        (1 4 0))
-	(newsgroups     (1 1 3))
-	(article        (1 1 3))))

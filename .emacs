@@ -410,13 +410,6 @@ The face definitions are based upon the variables
 
 (global-set-key "\C-cg" 'magit-status)
 
-;;; Elscreen
-(add-to-list 'load-path "~/.emacs.d/site-lisp/apel-10.8")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/elscreen-1.4.6")
-(require 'elscreen)
-
-(setq elscreen-display-tab nil)
-
 ;;; Enable sending email from Emacs using my GMail account.
 (setq send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it
