@@ -410,6 +410,10 @@ The face definitions are based upon the variables
 
 (global-set-key "\C-cg" 'magit-status)
 
+;;; Open URL links in Google Chrome.
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "google-chrome")
+
 ;;; Enable sending email from Emacs using my GMail account.
 (setq send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it
