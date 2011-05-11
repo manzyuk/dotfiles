@@ -100,7 +100,8 @@
 		 (name . "^\\*Messages\\*$")))
 	       ("LaTeX"
 		(or
-		 (mode . latex-mode)))
+		 (mode . latex-mode)
+		 (mode . bibtex-mode)))
 	       ("Haskell"
 		(or
 		 (mode . haskell-mode)
