@@ -234,6 +234,7 @@ The face definitions are based upon the variables
 
 ;;; Enable `dired-find-alternate-file'.
 (put 'dired-find-alternate-file 'disabled nil)
+(define-key dired-mode-map "\r" 'dired-find-alternate-file)
 
 ;;; text-mode hooks (log-edit-mode inherits these from text-mode).
 (add-hook 'text-mode-hook 'turn-on-flyspell)
