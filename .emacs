@@ -488,10 +488,3 @@ The face definitions are based upon the variables
     (insert (format "\n\n%s" (shell-command-to-string (format "translate \"%s\"" text))))))
 
 (global-set-key "\C-ct" 'google-translate)
-
-;;; BBDB
-(require 'bbdb)
-(setq bbdb-offer-save 1
-      bbdb-use-pop-up nil
-      bbdb/mail-auto-create-p nil
-      bbdb-completion-display-record nil)
