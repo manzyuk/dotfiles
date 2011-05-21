@@ -56,6 +56,8 @@
  '(show-paren-mode t)
  '(tramp-default-method "ssh")
  '(uniquify-buffer-name-style (quote reverse) nil (uniquify))
+ '(user-full-name "Oleksandr Manzyuk")
+ '(user-mail-address "manzyuk@gmail.com")
  '(x-select-enable-clipboard t)
  '(x-select-enable-primary nil))
 (custom-set-faces
@@ -487,38 +489,9 @@ The face definitions are based upon the variables
 
 (global-set-key "\C-ct" 'google-translate)
 
-;; VM setup (see http://web.psung.name/emacstips/vm.html)
-
-(setq user-full-name    "Oleksandr Manzyuk"
-      user-mail-address "manzyuk@gmail.com")
-
-(setq vm-folder-directory    "~/Mail"
-      vm-primary-inbox       "~/Mail/INBOX"
-      mail-archive-file-name "~/Mail/Sent")
-
-(setq vm-spool-files
-      '(("~/Mail/INBOX"
-	 "pop-ssl:pop.gmail.com:995:pass:manzyuk:*"
-	 "~/Mail/INBOX.CRASH")))
-
-(setq password-cache-expiry 86400)
-(setq vm-stunnel-program "stunnel4")
-
-(setq mail-from-style 'angels
-      mail-interactive nil
-      vm-preview-lines nil
-      vm-delete-empty-folders nil)
-
-(setq-default vm-summary-show-threads t)
-
-(setq vm-delete-after-archiving t
-      vm-delete-after-saving    t
-      vm-move-after-deleting    t)
-
-(autoload 'vm "vm" "Start VM on your primary inbox." t)
-(autoload 'vm-other-frame "vm" "Like `vm' but starts in another frame." t)
-(autoload 'vm-visit-folder "vm" "Start VM on an arbitrary folder." t)
-(autoload 'vm-visit-virtual-folder "vm" "Visit a VM virtual folder." t)
-(autoload 'vm-mode "vm" "Run VM major mode on a buffer." t)
-(autoload 'vm-mail "vm" "Send a mail message using VM." t)
-(autoload 'vm-submit-bug-report "vm" "Send a bug report about VM." t)
+;;; BBDB
+(require 'bbdb)
+(setq bbdb-offer-save 1
+      bbdb-use-pop-up nil
+      bbdb/mail-auto-create-p nil
+      bbdb-completion-display-record nil)
