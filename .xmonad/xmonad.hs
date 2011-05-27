@@ -15,7 +15,6 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageHelpers
 
 import XMonad.Util.Run                   (spawnPipe, hPutStrLn)
-import XMonad.Util.Font                  (encodeOutput)
 import XMonad.Util.EZConfig              (additionalKeysP)
 import XMonad.Util.NamedWindows          (getName)
 
@@ -25,6 +24,7 @@ import Data.Maybe                        (isJust, catMaybes)
 import Data.Ratio                        ((%))
 import Data.Monoid                       (All(All), mappend)
 
+import Codec.Binary.UTF8.String          (encodeString)
 import Control.Monad                     (when, zipWithM_, liftM2)
 
 
@@ -182,7 +182,7 @@ dynamicLogString' screen pp = do
   -- run extra loggers, ignoring any that generate errors.
   extras <- mapM (`catchX` return Nothing) $ ppExtras pp
 
-  return $ encodeOutput . sepBy (ppSep pp) . ppOrder pp $
+  return $ encodeString . sepBy (ppSep pp) . ppOrder pp $
              [ ws
              , ppLayout pp ld
              , ppTitle  pp wt
