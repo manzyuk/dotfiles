@@ -11,4 +11,8 @@ xrdb -load $HOME/.Xresources
 
 gnome-screensaver &
 
+eval $(gnome-keyring-daemon --start)
+export GNOME-KEYRING-SOCKET
+export GNOME-KEYRING-PID
+
 exec $HOME/.cabal/bin/xmonad
