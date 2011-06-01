@@ -1,1 +1,12 @@
 include "/usr/share/themes/ClearlooksClassic/gtk-2.0/gtkrc"
+
+style "dark"
+{
+    font_name = "Monospace 11"
+    text[NORMAL] = "#DEDEDE"
+    base[NORMAL] = "#2B2B2B"
+}
+
+widget "*pidgin_conv_entry"  style "dark"
+widget "*pidgin_conv_imhtml" style "dark"
+widget "*pidgin_log_imhtml"  style "dark"
