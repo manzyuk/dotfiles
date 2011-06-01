@@ -1,8 +1,8 @@
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(TeX-auto-save t)
  '(TeX-parse-self t)
  '(TeX-save-query nil)
@@ -61,10 +61,10 @@
  '(x-select-enable-clipboard t)
  '(x-select-enable-primary nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(fringe ((((class color) (background dark)) (:background "grey20"))))
  '(magit-diff-add ((((class color) (background dark)) (:foreground "#8ae234"))))
  '(magit-diff-del ((((class color) (background dark)) (:foreground "#ef2929"))))
@@ -86,32 +86,32 @@
 
 (setq ibuffer-saved-filter-groups
       (quote (("default"
-	       ("Dired"
-		(mode . dired-mode))
-	       ("Emacs"
-		(or
-		 (mode . help-mode)
-		 (mode . Info-mode)
-		 (mode . shell-mode)
-		 (mode . Custom-mode)
-		 (mode . apropos-mode)
-		 (mode . emacs-lisp-mode)
-		 (mode . completion-list-mode)
-		 (name . "^\\*scratch\\*$")
-		 (name . "^\\*Messages\\*$")))
-	       ("LaTeX"
-		(or
-		 (mode . latex-mode)
-		 (mode . bibtex-mode)))
-	       ("Haskell"
-		(or
-		 (mode . haskell-mode)
-		 (mode . literate-haskell-mode)
-		 (mode . inferior-haskell-mode)))))))
+               ("Dired"
+                (mode . dired-mode))
+               ("Emacs"
+                (or
+                 (mode . help-mode)
+                 (mode . Info-mode)
+                 (mode . shell-mode)
+                 (mode . Custom-mode)
+                 (mode . apropos-mode)
+                 (mode . emacs-lisp-mode)
+                 (mode . completion-list-mode)
+                 (name . "^\\*scratch\\*$")
+                 (name . "^\\*Messages\\*$")))
+               ("LaTeX"
+                (or
+                 (mode . latex-mode)
+                 (mode . bibtex-mode)))
+               ("Haskell"
+                (or
+                 (mode . haskell-mode)
+                 (mode . literate-haskell-mode)
+                 (mode . inferior-haskell-mode)))))))
 
 (add-hook 'ibuffer-mode-hook
-	  (lambda ()
-	    (ibuffer-switch-to-saved-filter-groups "default")))
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;;; Make mouse middle-click only paste from primary X11 selection,
 ;;; not clipboard and kill ring.
@@ -126,13 +126,13 @@
 ;;; Replace `dabbrev-expand' with `hippie-expand'.
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev
-	try-expand-dabbrev-all-buffers
-	try-expand-dabbrev-from-kill
-	try-complete-file-name-partially
-	try-complete-file-name
-	try-complete-lisp-symbol-partially
-	try-complete-lisp-symbol
-	try-expand-whole-kill))
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-file-name-partially
+        try-complete-file-name
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol
+        try-expand-whole-kill))
 
 (global-set-key [?\C-.] 'hippie-expand)
 
@@ -152,9 +152,9 @@
 (setq non-sgr-control-sequence-regexp
       (regexp-alternatives
        '("\033\\[\\??[0-9;]*[^0-9;m]"   ; non-SGR CSI escape sequences
-	 "\033\\][0-2];.*?\007"         ; icon name escape sequences
-	 "\012\033\\[2K\033\\[1F"       ; noop
-	 )))
+         "\033\\][0-2];.*?\007"         ; icon name escape sequences
+         "\012\033\\[2K\033\\[1F"       ; noop
+         )))
 
 (defun filter-non-sgr-control-sequences-in-region (begin end)
   (save-excursion
@@ -164,12 +164,12 @@
 
 (defun filter-non-sgr-control-sequences-in-output (ignored)
   (let ((start-marker (or comint-last-output-start
-			  (point-min-marker)))
-	(end-marker (process-mark (get-buffer-process (current-buffer)))))
+                          (point-min-marker)))
+        (end-marker (process-mark (get-buffer-process (current-buffer)))))
     (filter-non-sgr-control-sequences-in-region start-marker end-marker)))
 
 (add-hook 'comint-output-filter-functions
-	  'filter-non-sgr-control-sequences-in-output)
+          'filter-non-sgr-control-sequences-in-output)
 
 (eval-after-load "ansi-color"
   ;; Copied from `ansi-color.el' and modified to support high intensity colors.
@@ -182,45 +182,45 @@ The index into the vector is an ANSI code.  See the documentation of
 The face definitions are based upon the variables
 `ansi-color-faces-vector' and `ansi-color-names-vector'."
      (let ((ansi-color-map (make-vector 110 nil))
-	   (index 0))
+           (index 0))
        ;; miscellaneous attributes
        (mapc
-	(function (lambda (e)
-		    (aset ansi-color-map index e)
-		    (setq index (1+ index)) ))
-	ansi-color-faces-vector)
+        (function (lambda (e)
+                    (aset ansi-color-map index e)
+                    (setq index (1+ index)) ))
+        ansi-color-faces-vector)
        ;; foreground attributes
        (setq index 30)
        (mapc
-	(function (lambda (e)
-		    (aset ansi-color-map index
-			  (ansi-color-make-face 'foreground e))
-		    (setq index (1+ index)) ))
-	ansi-color-names-vector)
+        (function (lambda (e)
+                    (aset ansi-color-map index
+                          (ansi-color-make-face 'foreground e))
+                    (setq index (1+ index)) ))
+        ansi-color-names-vector)
        ;; background attributes
        (setq index 40)
        (mapc
-	(function (lambda (e)
-		    (aset ansi-color-map index
-			  (ansi-color-make-face 'background e))
-		    (setq index (1+ index)) ))
-	ansi-color-names-vector)
+        (function (lambda (e)
+                    (aset ansi-color-map index
+                          (ansi-color-make-face 'background e))
+                    (setq index (1+ index)) ))
+        ansi-color-names-vector)
        ;; foreground attributes -- high intensity
        (setq index 90)
        (mapc
-	(function (lambda (e)
-		    (aset ansi-color-map index
-			  (ansi-color-make-face 'foreground e))
-		    (setq index (1+ index)) ))
-	ansi-color-names-vector)
+        (function (lambda (e)
+                    (aset ansi-color-map index
+                          (ansi-color-make-face 'foreground e))
+                    (setq index (1+ index)) ))
+        ansi-color-names-vector)
        ;; background attributes -- high intensity
        (setq index 100)
        (mapc
-	(function (lambda (e)
-		    (aset ansi-color-map index
-			  (ansi-color-make-face 'background e))
-		    (setq index (1+ index)) ))
-	ansi-color-names-vector)
+        (function (lambda (e)
+                    (aset ansi-color-map index
+                          (ansi-color-make-face 'background e))
+                    (setq index (1+ index)) ))
+        ansi-color-names-vector)
        ansi-color-map)))
 
 (defun ansi-color-update-color-map ()
@@ -236,8 +236,8 @@ The face definitions are based upon the variables
 ;;; Enable `dired-find-alternate-file'.
 (put 'dired-find-alternate-file 'disabled nil)
 (add-hook 'dired-mode-hook
-	  (lambda ()
-	    (define-key dired-mode-map "\r" 'dired-find-alternate-file)))
+          (lambda ()
+            (define-key dired-mode-map "\r" 'dired-find-alternate-file)))
 
 ;;; text-mode hooks (log-edit-mode inherits these from text-mode).
 (add-hook 'text-mode-hook 'turn-on-flyspell)
@@ -252,13 +252,13 @@ The face definitions are based upon the variables
   (let ((buf (process-buffer process)))
     (when (buffer-live-p buf)
       (with-current-buffer buf
-	(insert (format "\nProcess %s %s" process event))))))
+        (insert (format "\nProcess %s %s" process event))))))
 
 (defun turn-on-comint-history ()
   (let ((process (get-buffer-process (current-buffer))))
     (when process
       (setq comint-input-ring-file-name
-		(format "~/.emacs.d/inferior-%s-history" (process-name process)))
+            (format "~/.emacs.d/inferior-%s-history" (process-name process)))
       (comint-read-input-ring)
       (set-process-sentinel process #'comint-write-history-on-exit))))
 
@@ -270,9 +270,9 @@ The face definitions are based upon the variables
 
 (defun mapc-buffers (fn)
   (mapc (lambda (buffer)
-	  (with-current-buffer buffer
-	    (funcall fn)))
-	(buffer-list)))
+          (with-current-buffer buffer
+            (funcall fn)))
+        (buffer-list)))
 
 (defun comint-write-input-ring-all-buffers ()
   (mapc-buffers 'comint-write-input-ring))
@@ -295,8 +295,8 @@ The face definitions are based upon the variables
    (lambda ()
      (let ((file-name (buffer-file-name)))
        (when file-name
-	 (kill-buffer)
-	 (find-file file-name))))))
+         (kill-buffer)
+         (find-file file-name))))))
 
 ;;; Haskell
 (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode-2.8.0")
@@ -329,14 +329,14 @@ The face definitions are based upon the variables
 (defun inferior-ruby-completions (stub)
   "Return a list of completions for the line of Ruby code starting with STUB."
   (let* ((process (get-buffer-process ruby-buffer))
-	 (comint-filter (process-filter process))
-	 (kept "")
-	 completions)
+         (comint-filter (process-filter process))
+         (kept "")
+         completions)
     (set-process-filter process
-			(lambda (proc string)
-			  (setf kept (concat kept string))))
+                        (lambda (proc string)
+                          (setf kept (concat kept string))))
     (process-send-string process
-			 (format "puts IRB::InputCompletor::CompletionProc.call('%s').compact\n" stub))
+                         (format "puts IRB::InputCompletor::CompletionProc.call('%s').compact\n" stub))
     (while (not (string-match inferior-ruby-prompt-pattern kept))
       (accept-process-output process))
     (when (string-match "^[[:alpha:]]+?Error: " kept)
@@ -349,15 +349,16 @@ The face definitions are based upon the variables
   "Complete Ruby code at point."
   (interactive)
   (let* ((stub (thing-at-point 'line))
-	 (completions (inferior-ruby-completions stub)))
+         (completions (inferior-ruby-completions stub)))
     (comint-dynamic-simple-complete stub completions)))
 
 (add-hook 'inferior-ruby-mode-hook
-	  (lambda ()
-	    (define-key inferior-ruby-mode-map (kbd "TAB") 'inferior-ruby-complete)))
+          (lambda ()
+            (define-key inferior-ruby-mode-map (kbd "TAB") 'inferior-ruby-complete)))
 
 ;;; Scheme
 (setq scheme-program-name "/home/manzyuk/bin/mit-scheme")
+(add-hook 'inferior-scheme-mode-hook 'turn-on-comint-history)
 
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
@@ -384,10 +385,10 @@ The face definitions are based upon the variables
 
 (setq org-tag-alist
       '(("work"     . ?w)
-	("home"     . ?h)
-	("email"    . ?e)
-	("phone"    . ?p)
-	("computer" . ?c)))
+        ("home"     . ?h)
+        ("email"    . ?e)
+        ("phone"    . ?p)
+        ("computer" . ?c)))
 
 (setq org-tags-column -90)
 
@@ -398,15 +399,15 @@ The face definitions are based upon the variables
   '(progn
      (defun org-mode-in-block-delimiter-p ()
        (save-excursion
-	 (beginning-of-line)
-	 (looking-at "^\s*#\\+\\(BEGIN\\|END\\)_.*$")))
+         (beginning-of-line)
+         (looking-at "^\s*#\\+\\(BEGIN\\|END\\)_.*$")))
 
      (defun org-mode-flyspell-verify ()
        (and (not (get-text-property (max (1- (point)) (point-min)) 'keymap))
-	    (not (get-text-property (max (1- (point)) (point-min)) 'org-no-flyspell))
-	    ;; don't check spelling inside code blocks and block delimiters
-	    (not (eql (get-text-property (max (1- (point)) (point-min)) 'face) 'org-block))
-	    (not (org-mode-in-block-delimiter-p))))))
+            (not (get-text-property (max (1- (point)) (point-min)) 'org-no-flyspell))
+            ;; don't check spelling inside code blocks and block delimiters
+            (not (eql (get-text-property (max (1- (point)) (point-min)) 'face) 'org-block))
+            (not (org-mode-in-block-delimiter-p))))))
 
 ;;; Magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit-1.0.0")
@@ -446,11 +447,11 @@ The face definitions are based upon the variables
 (defun anything-library ()
   (interactive)
   (anything '(library-files)
-	    nil
-	    "View: "
-	    nil
-	    nil
-	    "*library*"))
+            nil
+            "View: "
+            nil
+            nil
+            "*library*"))
 
 (defun shell-command-to-list (command)
   (split-string (shell-command-to-string command) "\n" t))
@@ -460,8 +461,8 @@ The face definitions are based upon the variables
 
 (setq library-files
       `((name       . ,(getenv "LIBRARY"))
-	(candidates . ,(shell-command-to-list "ls $LIBRARY"))
-	(action     . (("Open with Evince" . open-with-evince)))))
+        (candidates . ,(shell-command-to-list "ls $LIBRARY"))
+        (action     . (("Open with Evince" . open-with-evince)))))
 
 (global-set-key "\C-cv" 'anything-library)
 
@@ -471,8 +472,8 @@ The face definitions are based upon the variables
   (interactive
    (list
     (read-shell-command "Run: " nil nil
-			(and buffer-file-name
-			     (file-relative-name buffer-file-name)))))
+                        (and buffer-file-name
+                             (file-relative-name buffer-file-name)))))
   (setq command (concat command " > /dev/null 2>&1 & disown"))
   (shell-command command))
 
