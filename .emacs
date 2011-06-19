@@ -143,6 +143,12 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'shell-mode-hook 'ansi-color-update-color-map)
 
+;;; Use dirtrack-mode in shell buffers.
+(add-hook 'shell-mode-hook 'dirtrack-mode-on)
+
+(defun dirtrack-mode-on () (dirtrack-mode t))
+
+
 (defun regexp-alternatives (regexps)
   (mapconcat (lambda (regexp) (concat "\\(" regexp "\\)")) regexps "\\|"))
 
