@@ -2,6 +2,7 @@ import XMonad
 import qualified XMonad.StackSet as S
 
 import XMonad.Layout.IM
+import XMonad.Layout.Grid
 import XMonad.Layout.Reflect             (reflectHoriz)
 import XMonad.Layout.NoBorders           (smartBorders)
 import XMonad.Layout.Decoration
@@ -63,9 +64,11 @@ myWorkspaces = ["1:edit", "2:surf", "3:read", "4:chat", "5:play", "6:misc", "7:m
 myLayoutHook = avoidStruts
              $ smartBorders
              $ noFrillsDeco shrinkText myTheme
-             $ onWorkspace "4:chat" pidginLayout
+             $ onWorkspace "4:chat" chatLayout
              $ layoutHook defaultConfig
-    where pidginLayout = reflectHoriz $ withIM (1/7) (Role "buddy_list") Full
+    where chatLayout = withIM (1/6) (Role "MainWindow")
+                     $ reflectHoriz
+                     $ withIM (1/5) (Role "buddy_list") Grid
 
 
 myTheme = defaultTheme {
@@ -88,6 +91,7 @@ myManageHook = manageDocks <+> manageFloats <+> manageApps
                                     , className =? "XDvi"          --> moveTo "3:read"
                                     , className =? "Xpdf"          --> moveTo "3:read"
                                     , className =? "Evince"        --> moveTo "3:read"
+                                    , className =? "Skype"         --> moveTo "4:chat"
                                     , className =? "Pidgin"        --> moveTo "4:chat"
                                     , className =? "Rhythmbox"     --> moveTo "5:play"
                                     ]
@@ -144,8 +148,9 @@ pp = defaultPP {
      }
     where
       iconify l | "Mirror" `isInfixOf` l = "[-]"
-      iconify l | "Tall"   `isInfixOf` l = "[|]"
-      iconify l | "Full"   `isInfixOf` l = "[ ]"
+                | "Grid"   `isInfixOf` l = "[+]"
+                | "Tall"   `isInfixOf` l = "[|]"
+                | "Full"   `isInfixOf` l = "[ ]"
       iconify _                          = "[?]"
 
 
