@@ -265,7 +265,7 @@ The face definitions are based upon the variables
 (setenv "VISUAL" "emacsclient")
 (setenv "PAGER" "cat")
 (setenv "GEM_HOME" "/home/manzyuk/.gems")
-(setenv "BIBINPUTS" "/home/manzyuk/texmf/bibtex/bib")
+(setenv "BIBINPUTS" "/home/manzyuk/texmf/bibtex/bib:.")
 
 ;;; Enable `dired-find-alternate-file'.
 (put 'dired-find-alternate-file 'disabled nil)
