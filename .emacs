@@ -103,6 +103,10 @@
                 (or
                  (mode . latex-mode)
                  (mode . bibtex-mode)))
+               ("Scheme"
+                (or
+                 (mode . scheme-mode)
+                 (mode . inferior-scheme-mode)))
                ("Haskell"
                 (or
                  (mode . haskell-mode)
@@ -416,8 +420,8 @@ The face definitions are based upon the variables
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;;; Org-mode
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org-7.3/lisp")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org-7.3/contrib/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/contrib/lisp")
 
 (require 'org-install)
 
@@ -450,11 +454,17 @@ The face definitions are based upon the variables
          (looking-at "^\s*#\\+\\(BEGIN\\|END\\)_.*$")))
 
      (defun org-mode-flyspell-verify ()
-       (and (not (get-text-property (max (1- (point)) (point-min)) 'keymap))
-            (not (get-text-property (max (1- (point)) (point-min)) 'org-no-flyspell))
-            ;; don't check spelling inside code blocks and block delimiters
-            (not (eql (get-text-property (max (1- (point)) (point-min)) 'face) 'org-block))
-            (not (org-mode-in-block-delimiter-p))))))
+       (let ((pos (max (1- (point)) (point-min))))
+         (and (not (get-text-property pos 'keymap))
+              (not (get-text-property pos 'org-no-flyspell))
+              ;; don't check spelling inside code blocks and block delimiters
+              (not (some (lambda (ovl)
+                           (eql (overlay-get ovl 'face)
+                                'org-block-background))
+                         (overlays-at pos)))
+              (not (org-mode-in-block-delimiter-p)))))))
+
+(setq org-src-fontify-natively t)
 
 ;;; Magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit-1.0.0")
