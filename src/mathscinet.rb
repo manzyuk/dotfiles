@@ -2,8 +2,8 @@
 
 # Usage: ruby mathscinet.rb name1 name2 ...
 #
-# Retrieve BibTeX items for all publications of authors name1, name2, ...
-# from the MathSciNet database.
+# Retrieve BibTeX items for all publications of authors matching
+# name1, name2, ...  from the MathSciNet database.
 
 require 'open-uri'
 
