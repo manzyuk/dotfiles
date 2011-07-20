@@ -411,6 +411,16 @@ The face definitions are based upon the variables
 (setq scheme-program-name "/home/manzyuk/bin/mit-scheme")
 (add-hook 'inferior-scheme-mode-hook 'turn-on-comint-history)
 
+;;; ParEdit
+(autoload 'enable-paredit-mode "paredit"
+  "Minor mode for pseudo-structurally editing Lisp code." t)
+
+(dolist (mode-hook
+         '(emacs-lisp-mode-hook
+           scheme-mode-hook
+           inferior-scheme-mode-hook))
+  (add-hook mode-hook 'enable-paredit-mode))
+
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
 (load "auctex.el" nil t t)
