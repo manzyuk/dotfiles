@@ -421,6 +421,32 @@ The face definitions are based upon the variables
            inferior-scheme-mode-hook))
   (add-hook mode-hook 'enable-paredit-mode))
 
+;;; ElDoc
+(require 'eldoc)
+(eldoc-add-command
+ 'paredit-backward-delete
+ 'paredit-close-round)
+
+(defun turn-on-eldoc-mode () (eldoc-mode 1))
+
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+
+;;; scheme-complete
+(autoload 'scheme-complete-or-indent "scheme-complete" nil t)
+(eval-after-load 'scheme
+  '(progn
+     (define-key scheme-mode-map "\t" 'scheme-complete-or-indent)
+     (define-key inferior-scheme-mode-map "\t" 'scheme-complete-or-indent)))
+(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
+
+(defun turn-on-eldoc-mode-for-scheme ()
+  (make-local-variable 'eldoc-documentation-function)
+  (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
+  (turn-on-eldoc-mode))
+
+(add-hook 'scheme-mode-hook 'turn-on-eldoc-mode-for-scheme)
+(add-hook 'inferior-scheme-mode-hook 'turn-on-eldoc-mode-for-scheme)
+
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
 (load "auctex.el" nil t t)
