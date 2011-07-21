@@ -427,25 +427,24 @@ The face definitions are based upon the variables
  'paredit-backward-delete
  'paredit-close-round)
 
-(defun turn-on-eldoc-mode () (eldoc-mode 1))
-
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'emacs-lisp-mode-hook (lambda () (eldoc-mode 1)))
 
 ;;; scheme-complete
-(autoload 'scheme-complete-or-indent "scheme-complete" nil t)
-(eval-after-load 'scheme
-  '(progn
-     (define-key scheme-mode-map "\t" 'scheme-complete-or-indent)
-     (define-key inferior-scheme-mode-map "\t" 'scheme-complete-or-indent)))
+(autoload 'scheme-smart-complete          "scheme-complete" nil t)
 (autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
-
-(defun turn-on-eldoc-mode-for-scheme ()
-  (make-local-variable 'eldoc-documentation-function)
-  (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
-  (turn-on-eldoc-mode))
-
-(add-hook 'scheme-mode-hook 'turn-on-eldoc-mode-for-scheme)
-(add-hook 'inferior-scheme-mode-hook 'turn-on-eldoc-mode-for-scheme)
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (define-key scheme-mode-map "\e\t" 'scheme-smart-complete)
+            (make-local-variable 'eldoc-documentation-function)
+            (setq eldoc-documentation-function
+                  'scheme-get-current-symbol-info)
+            (eldoc-mode 1)))
+;; Don't enable ElDoc mode in inferior-scheme buffers.  It slows down
+;; Emacs to the point of making it barely usable if there is a lot of
+;; output in the buffer.
+(add-hook 'inferior-scheme-mode-hook
+          (lambda ()
+            (define-key inferior-scheme-mode-map "\e\t" 'scheme-smart-complete)))
 
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
