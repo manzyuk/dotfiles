@@ -411,6 +411,17 @@ The face definitions are based upon the variables
 (setq scheme-program-name "/home/manzyuk/bin/mit-scheme")
 (add-hook 'inferior-scheme-mode-hook 'turn-on-comint-history)
 
+(require 'info)
+(require 'info-look)
+(setq Info-directory-list
+      (cons "/home/manzyuk/share/info" Info-directory-list))
+
+(info-lookup-add-help
+ :mode 'scheme-mode
+ :regexp "[^][()'\" \t\n]+"
+ :ignore-case t
+ :doc-spec '(("(r5rs)Index" nil nil nil)))
+
 ;;; ParEdit
 (autoload 'enable-paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
