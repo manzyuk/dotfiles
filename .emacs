@@ -421,31 +421,6 @@ The face definitions are based upon the variables
            inferior-scheme-mode-hook))
   (add-hook mode-hook 'enable-paredit-mode))
 
-;;; ElDoc
-(require 'eldoc)
-(eldoc-add-command
- 'paredit-backward-delete
- 'paredit-close-round)
-
-(add-hook 'emacs-lisp-mode-hook (lambda () (eldoc-mode 1)))
-
-;;; scheme-complete
-(autoload 'scheme-smart-complete          "scheme-complete" nil t)
-(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (define-key scheme-mode-map "\e\t" 'scheme-smart-complete)
-            (make-local-variable 'eldoc-documentation-function)
-            (setq eldoc-documentation-function
-                  'scheme-get-current-symbol-info)
-            (eldoc-mode 1)))
-;; Don't enable ElDoc mode in inferior-scheme buffers.  It slows down
-;; Emacs to the point of making it barely usable if there is a lot of
-;; output in the buffer.
-(add-hook 'inferior-scheme-mode-hook
-          (lambda ()
-            (define-key inferior-scheme-mode-map "\e\t" 'scheme-smart-complete)))
-
 ;;; AUCTeX
 (add-to-list 'load-path "~/.emacs.d/site-lisp/auctex-11.86")
 (load "auctex.el" nil t t)
