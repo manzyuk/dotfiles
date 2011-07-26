@@ -13,6 +13,7 @@ import XMonad.Hooks.SetWMName            (setWMName)
 import XMonad.Hooks.DynamicLog    hiding (xmobar)
 import XMonad.Hooks.ManageDocks          (avoidStruts, manageDocks)
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.EwmhDesktops         (fullscreenEventHook)
 import XMonad.Hooks.ManageHelpers
 
 import XMonad.Util.Run                   (spawnPipe, hPutStrLn)
@@ -209,48 +210,3 @@ pprWindowSet' screen sort' urgents pp s = sepBy (ppWsSep pp) . map fmt . sort' $
 
 sepBy :: String -> [String] -> String
 sepBy sep = intercalate sep . filter (not . null)
-
-
--- Support for toggling Totem movie player fullscreen, see:
--- http://code.google.com/p/xmonad/issues/detail?id=339
-
-
-fullFloat, tileWin :: Window -> X ()
-fullFloat w = windows $ S.float w r
-    where r = S.RationalRect 0 0 1 1
-tileWin w = windows $ S.sink w
-
-
-fullscreenEventHook :: Event -> X All
-fullscreenEventHook (ClientMessageEvent _ _ _ dpy win typ dat) = do
-  state  <- getAtom "_NET_WM_STATE"
-  fullsc <- getAtom "_NET_WM_STATE_FULLSCREEN"
-  isFull <- runQuery isFullscreen win
-
-
-  -- Constants for the _NET_WM_STATE protocol
-  let remove = 0
-      add    = 1
-      toggle = 2
-
-
-      -- The ATOM property type for changeProperty
-      ptype  = 4
-
-
-      action = head dat
-
-
-  when (typ == state && (fromIntegral fullsc) `elem` tail dat) $ do
-    when (action == add || (action == toggle && not isFull)) $ do
-      io $ changeProperty32 dpy win state ptype propModeReplace [fromIntegral fullsc]
-      fullFloat win
-    when (head dat == remove || (action == toggle && isFull)) $ do
-      io $ changeProperty32 dpy win state ptype propModeReplace []
-      tileWin win
-
-
-  return $ All True
-
-
-fullscreenEventHook _ = return $ All True
