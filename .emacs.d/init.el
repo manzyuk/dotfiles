@@ -116,10 +116,10 @@
 ;; Interpreter output moves point to the end of the output, but only
 ;; in the selected window so that we can look at the previous output
 ;; in other windows.
-(setq comint-move-point-for-output 'this)
+(setq-default comint-move-point-for-output 'this)
 
 ;; Input to interpreter causes the selected window to scroll.
-(setq comint-scroll-to-bottom-on-input 'this)
+(setq-default comint-scroll-to-bottom-on-input 'this)
 
 ;; Automatically close completions buffers in comint mode.
 ;; http://snarfed.org/automatically_close_completions_in_emacs_shell_comint_mode
