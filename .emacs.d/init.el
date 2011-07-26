@@ -113,11 +113,13 @@
 ;; Make the comint prompt read only.
 (setq comint-prompt-read-only t)
 
-;; Interpreter output moves point to the end of the output.
-(setq comint-move-point-for-output t)
+;; Interpreter output moves point to the end of the output, but only
+;; in the selected window so that we can look at the previous output
+;; in other windows.
+(setq comint-move-point-for-output 'this)
 
-;; Input to interpreter causes the windows showing buffer to scroll.
-(setq comint-scroll-to-bottom-on-input t)
+;; Input to interpreter causes the selected window to scroll.
+(setq comint-scroll-to-bottom-on-input 'this)
 
 ;; Automatically close completions buffers in comint mode.
 ;; http://snarfed.org/automatically_close_completions_in_emacs_shell_comint_mode
