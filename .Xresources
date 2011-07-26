@@ -27,6 +27,7 @@ Emacs.reverseVideo: on
 Emacs.background: #DEDEDE
 Emacs.foreground: #2B2B2B
 Emacs.cursorColor: #2B2B2B
+Emacs.verticalScrollBars: off
 Emacs.menuBar: off
 Emacs.toolBar: 0
 Emacs.borderWidth: 0

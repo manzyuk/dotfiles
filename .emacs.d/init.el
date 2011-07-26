@@ -71,9 +71,6 @@
 ;; Don't display menu bars.
 (menu-bar-mode -1)
 
-;; Put scroll bars on the right.
-(set-scroll-bar-mode 'right)
-
 ;; Softer colors.
 (set-face-background 'fringe "gray20")
 (set-face-background 'region "gray30")
