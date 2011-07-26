@@ -114,8 +114,8 @@
 (setq comint-prompt-read-only t)
 
 ;; Interpreter output moves point to the end of the output, but only
-;; in the selected window so that we can look at the previous output
-;; in other windows.
+;; in the selected window so that we can simultaneously look at
+;; previous outputs in other windows.
 (setq-default comint-move-point-for-output 'this)
 
 ;; Input to interpreter causes the selected window to scroll.
