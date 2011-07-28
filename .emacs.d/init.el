@@ -78,6 +78,10 @@
 ;; Disable the 3D highlighting of the mode line.
 (set-face-attribute 'mode-line nil :box nil)
 
+;; For buffers visiting files show the full file name in the title
+;; bar; for buffers not associated with files show the buffer name.
+(setq frame-title-format '(buffer-file-name "%f" ("%b")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Copy-paste ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Enable `delete-selection-mode'.
