@@ -4,9 +4,10 @@ import qualified XMonad.StackSet as S
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.Layout.Reflect             (reflectHoriz)
-import XMonad.Layout.NoBorders           (smartBorders)
+import XMonad.Layout.NoBorders           (noBorders)
 import XMonad.Layout.Decoration
 import XMonad.Layout.PerWorkspace        (onWorkspace)
+import XMonad.Layout.ToggleLayouts
 import XMonad.Layout.NoFrillsDecoration
 
 import XMonad.Hooks.SetWMName            (setWMName)
@@ -52,6 +53,7 @@ main = do
              `additionalKeysP`
              [ ("M-p", withDmenu "." "dmenu_path" "exec" ["-p", "'Run:'"])
              , ("M-o", withDmenu "$LIBRARY" "ls" "evince" ["-l", "75"])
+             , ("<F11>", sendMessage ToggleLayout)
              , ("M-<Esc>", spawn "gnome-screensaver-command --lock")
              , ("<XF86AudioMute>",        spawn "amixer -q set Master     toggle")
              , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%- unmute")
@@ -62,14 +64,17 @@ main = do
 myWorkspaces = ["1:edit", "2:surf", "3:read", "4:chat", "5:play", "6:misc", "7:misc", "8:misc", "9:misc"]
 
 
-myLayoutHook = avoidStruts
-             $ smartBorders
-             $ noFrillsDeco shrinkText myTheme
-             $ onWorkspace "4:chat" chatLayout
-             $ layoutHook defaultConfig
-    where chatLayout = withIM (1/6) (Role "MainWindow")
-                     $ reflectHoriz
-                     $ withIM (1/5) (Role "buddy_list") Grid
+myLayoutHook = toggleLayouts (noBorders Full) defaultLayout
+    where
+      defaultLayout
+          = avoidStruts
+          $ noFrillsDeco shrinkText myTheme
+          $ onWorkspace "4:chat" chatLayout
+          $ layoutHook defaultConfig
+      chatLayout
+          = withIM (1/6) (Role "MainWindow")
+          $ reflectHoriz
+          $ withIM (1/5) (Role "buddy_list") Grid
 
 
 myTheme = defaultTheme {
@@ -152,7 +157,7 @@ pp = defaultPP {
                 | "Grid"   `isInfixOf` l = "[+]"
                 | "Tall"   `isInfixOf` l = "[|]"
                 | "Full"   `isInfixOf` l = "[ ]"
-      iconify _                          = "[?]"
+                | otherwise              = l
 
 
 myLogHook pps = do
