@@ -294,6 +294,11 @@ Dmitriy Igrishin's patched version of comint.el."
 ;; current directory to be opened immediately with `dired'.
 (setq ido-show-dot-for-dired t)
 
+;; Show a file/buffer in selected window, even if that file/buffer is
+;; visible in another frame.
+(setq ido-default-file-method   'selected-window
+      ido-default-buffer-method 'selected-window)
+
 ;; Enable `ido-mode'.
 (ido-mode 1)
 
