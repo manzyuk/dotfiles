@@ -46,12 +46,6 @@
   (shell-command
    (format "evince \"$LIBRARY/%s\" > /dev/null 2>&1 & disown" name)))
 
-(defun fullscreen ()
-  "Toggle fullscreen mode in the selected frame."
-  (interactive)
-  (set-frame-parameter nil 'fullscreen
-                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Startup ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Don't display the startup screen.
@@ -87,9 +81,6 @@
 ;; For buffers visiting files show the full file name in the title
 ;; bar; for buffers not associated with files show the buffer name.
 (setq frame-title-format '(buffer-file-name "%f" ("%b")))
-
-;; Bind F11 to toggle fullscreen mode in the selected frame.
-(global-set-key [f11] 'fullscreen)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Copy-paste ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
