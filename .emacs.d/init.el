@@ -579,6 +579,8 @@ Dmitriy Igrishin's patched version of comint.el."
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 
+(setq org-agenda-restore-windows-after-quit t)
+
 (setq org-agenda-files '("~/org/todo.org"))
 
 (setq org-todo-keywords
