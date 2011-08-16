@@ -396,6 +396,11 @@ Dmitriy Igrishin's patched version of comint.el."
           (lambda ()
             (define-key dired-mode-map "\r" 'dired-find-alternate-file)))
 
+;; Teach dired to uncompress zip files.
+(eval-after-load "dired-aux"
+  '(add-to-list 'dired-compress-file-suffixes
+                '("\\.zip\\'" ".zip" "unzip")))
+
 ;; `text-mode' hooks.
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
