@@ -367,9 +367,9 @@ Dmitriy Igrishin's patched version of comint.el."
 ;;; Start server.
 (server-start)
 
-;;; Open URL links in Google Chrome.
+;;; Open URL links in Iceweasel.
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "google-chrome")
+      browse-url-generic-program "iceweasel")
 
 ;; Set the default coding system to UTF-8-UNIX.
 (prefer-coding-system 'utf-8-unix)
