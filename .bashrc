@@ -99,3 +99,4 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 export TERM="xterm-256color"
+export GPGKEY=313F4CFE
