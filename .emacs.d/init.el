@@ -395,7 +395,8 @@ Dmitriy Igrishin's patched version of comint.el."
 ;; Don't use spaces instead of tabs in makefiles.
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 
-;; Always use symmetric encryption.
+;; Don't ask to select recipients when encrypting files.  Use
+;; `epa-file-encrypt-to' local variable to specify those.
 (setq epa-file-select-keys nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
