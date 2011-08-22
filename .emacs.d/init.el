@@ -374,19 +374,6 @@ Dmitriy Igrishin's patched version of comint.el."
 ;; Set the default coding system to UTF-8-UNIX.
 (prefer-coding-system 'utf-8-unix)
 
-;; Replace `dabbrev-expand' with `hippie-expand'.
-(setq hippie-expand-try-functions-list
-      '(try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-file-name-partially
-        try-complete-file-name
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol
-        try-expand-whole-kill))
-
-(global-set-key "\M-/" 'hippie-expand)
-
 ;; Automatically make scripts starting with #! executable.
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
