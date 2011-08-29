@@ -22,11 +22,7 @@ URxvt*color14: #34E2E2
 URxvt*color15: #EEEEEC
 
 Emacs.FontBackend: xft
-Emacs.font: Monospace-11
-Emacs.reverseVideo: on
-Emacs.background: #DEDEDE
-Emacs.foreground: #2B2B2B
-Emacs.cursorColor: #2B2B2B
+Emacs.font: Monospace-10
 Emacs.verticalScrollBars: off
 Emacs.menuBar: off
 Emacs.toolBar: 0
