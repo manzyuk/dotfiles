@@ -582,6 +582,33 @@ Dmitriy Igrishin's patched version of comint.el."
           (lambda ()
             (define-key inferior-ruby-mode-map "\t" 'inferior-ruby-complete)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SLIME ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+
+(require 'slime)
+(slime-setup '(slime-fancy slime-asdf))
+
+(setq inferior-lisp-program         "sbcl"
+      slime-net-coding-system       'utf-8-unix
+      slime-lisp-implementations    '((sbcl ("sbcl") :coding-system utf-8-unix))
+      slime-autodoc-use-multiline-p t)
+
+(global-set-key "\C-cs" 'slime-selector)
+
+(require 'info-look)
+
+(info-lookup-add-help
+ :mode 'lisp-mode
+ :regexp "[^][()'\" \t\n]+"
+ :ignore-case t
+ :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+
+(info-lookup-add-help
+ :mode 'slime-repl-mode
+ :regexp "[^][()'\" \t\n]+"
+ :ignore-case t
+ :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Scheme ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq scheme-program-name "/home/manzyuk/bin/mit-scheme")
@@ -594,6 +621,8 @@ Dmitriy Igrishin's patched version of comint.el."
 
 (dolist (mode-hook
          '(emacs-lisp-mode-hook
+           lisp-mode-hook
+           slime-repl-mode-hook
            scheme-mode-hook
            inferior-scheme-mode-hook))
   (add-hook mode-hook 'enable-paredit-mode))
