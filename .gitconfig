@@ -3,3 +3,5 @@
         name = Oleksandr Manzyuk
 [color]
         ui = true
+[gui]
+	fontdiff = -family fixed -size 10 -weight normal -slant roman -underline 0 -overstrike 0
