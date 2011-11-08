@@ -384,6 +384,9 @@ Dmitriy Igrishin's patched version of comint.el."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Misc ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Always add a new line at the end of the file.
+(setq require-final-newline 'visit-save)
+
 ;; Clean up whitespace in the buffer on save.
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
