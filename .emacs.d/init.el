@@ -8,6 +8,18 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Utility functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun kill-region-if-mark-active ()
+  (interactive)
+  (if mark-active
+      (kill-region (region-beginning) (region-end))
+    (message "There is no active region")))
+
+(defun kill-ring-save-if-mark-active ()
+  (interactive)
+  (if mark-active
+      (kill-ring-save (region-beginning) (region-end))
+    (message "There is no active region")))
+
 (defun turn-on-subword-mode () (subword-mode 1))
 
 (defun regexp-alternatives (regexps)
@@ -79,6 +91,14 @@
 (setq frame-title-format '(buffer-file-name "%f" ("%b")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Copy-paste ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Kill and copy text only if there is an active region (the default
+;; behavior when C-w kills the region between the mark and the point
+;; even if the region is not active is irritating).
+(global-set-key (kbd "C-w")        'kill-region-if-mark-active)
+(global-set-key (kbd "S-<delete>") 'kill-region-if-mark-active)
+(global-set-key (kbd "M-w")        'kill-ring-save-if-mark-active)
+(global-set-key (kbd "C-<insert>") 'kill-ring-save-if-mark-active)
 
 ;; Enable `delete-selection-mode'.
 (delete-selection-mode 1)
