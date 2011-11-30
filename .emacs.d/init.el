@@ -404,6 +404,11 @@ Dmitriy Igrishin's patched version of comint.el."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Misc ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Do not jump briefly to matching open-paren when close-paren is
+;; inserted.  This is an archaism but AUCTeX still does that when
+;; dollars are inserted and `blink-matching-paren' is non-nil.
+(setq blink-matching-paren nil)
+
 ;; Always add a new line at the end of the file.
 (setq require-final-newline 'visit-save)
 
