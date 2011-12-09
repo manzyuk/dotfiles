@@ -128,6 +128,22 @@
 ;; Automatically make an active region the window selection.
 (setq select-active-regions t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Bookmarks ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun quick-bookmark-set ()
+  (interactive)
+  (bookmark-set (buffer-name)))
+
+(defun quick-bookmark-jump ()
+  (interactive)
+  (let ((name (buffer-name)))
+    (if (assoc name bookmark-alist)
+        (bookmark-jump name)
+      (message "No bookmark set"))))
+
+(global-set-key "\C-cm" 'quick-bookmark-set)
+(global-set-key "\C-cj" 'quick-bookmark-jump)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Comint ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'comint)
