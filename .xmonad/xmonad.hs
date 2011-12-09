@@ -32,8 +32,8 @@ import Control.Monad                     (when, zipWithM_, liftM2)
 
 
 main = do
-  xmobar0 <- xmobar 0 "%StdinReader%}{%playing%"
-             "[Run StdinReader, Run Com \"rhythmbox-client\" [\"--print-playing\"] \"playing\" 10]"
+  xmobar0 <- xmobar 0 "%StdinReader%}{"
+             "[Run StdinReader]"
   xmobar1 <- xmobar 1 "%StdinReader%}{%date%"
              "[Run StdinReader, Run Date \"%a %b %_d, %H:%M\" \"date\" 10]"
   xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
