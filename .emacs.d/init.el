@@ -58,6 +58,11 @@
   (shell-command
    (format "evince \"$LIBRARY/%s\" > /dev/null 2>&1 & disown" name)))
 
+(defun sudo-find-file (filename)
+  (interactive
+   (list (ido-read-file-name "Find file: ")))
+  (find-file (concat "/sudo:root@localhost:" filename)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Startup ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Don't display the startup screen.
