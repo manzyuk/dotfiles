@@ -811,16 +811,11 @@ Dmitriy Igrishin's patched version of comint.el."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Google Translate ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun google-translate (text)
-  (interactive
-   (list
-    (read-from-minibuffer "Translate: ")))
-  (with-output-to-temp-buffer "*Google Translate*"
-    (set-buffer "*Google Translate*")
-    (insert (format "%s" text))
-    (facemenu-set-face 'bold (point-min) (point-max))
-    (insert
-     (format "\n\n%s"
-             (shell-command-to-string (format "translate \"%s\"" text))))))
+(add-to-list 'load-path "~/.emacs.d/site-lisp/google-translate")
 
-(global-set-key "\C-ct" 'google-translate)
+(require 'google-translate)
+
+(setq google-translate-default-source-language "en"
+      google-translate-default-target-language "ru")
+
+(global-set-key "\C-ct" 'google-translate-query-translate)
