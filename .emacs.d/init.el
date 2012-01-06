@@ -58,7 +58,7 @@
   (shell-command
    (format "evince \"$LIBRARY/%s\" > /dev/null 2>&1 & disown" name)))
 
-(defun sudo-find-file (filename)
+(defun find-file-as-root (filename)
   (interactive
    (list (ido-read-file-name "Find file: ")))
   (find-file (concat "/sudo:root@localhost:" filename)))
