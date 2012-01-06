@@ -818,4 +818,6 @@ Dmitriy Igrishin's patched version of comint.el."
 (setq google-translate-default-source-language "en"
       google-translate-default-target-language "ru")
 
+(setq google-translate-enable-ido-completion t)
+
 (global-set-key "\C-ct" 'google-translate-query-translate)
