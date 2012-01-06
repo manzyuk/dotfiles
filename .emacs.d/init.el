@@ -248,6 +248,9 @@ Dmitriy Igrishin's patched version of comint.el."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Do not highlight any additional expressions in shell mode.
+(setq shell-font-lock-keywords nil)
+
 ;; Define colors a la the default gnome-terminal color theme.
 (setq color0  "#000000"
       color1  "#CC0000"
