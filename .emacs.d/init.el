@@ -390,8 +390,27 @@ Dmitriy Igrishin's patched version of comint.el."
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'shell-mode-hook 'ansi-color-generate-color-map)
 
-;; Use dirtrack-mode in shell buffers.
-(add-hook 'shell-mode-hook (lambda () (dirtrack-mode 1)))
+;; More reliable shell directory tracking.  Unfortunately, Unix-only.
+;; From https://github.com/nelhage/elisp/blob/master/dot-emacs.
+(defun inferior-process-cwd (buffer)
+  (let ((proc (get-buffer-process buffer)))
+    (when proc
+      (let ((pid (process-id proc)))
+        (file-symlink-p (format "/proc/%d/cwd" pid))))))
+
+(defun shell-mode-chdir (text)
+  (let ((cwd (inferior-process-cwd (current-buffer))))
+    (when cwd (cd cwd)))
+  text)
+
+(defun turn-on-directory-tracking ()
+  (shell-dirtrack-mode 0)
+  (if (memq system-type (list 'ms-dos 'windows-nt 'cygwin))
+      ;; On non-Unix systems, track directory by watching the prompt.
+      (dirtrack-mode 1)
+    (add-hook 'comint-preoutput-filter-functions 'shell-mode-chdir)))
+
+(add-hook 'shell-mode-hook 'turn-on-directory-tracking)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Ido ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -515,9 +534,13 @@ Dmitriy Igrishin's patched version of comint.el."
 ;; Don't use spaces instead of tabs in makefiles.
 (add-hook 'makefile-mode-hook (lambda () (setq indent-tabs-mode t)))
 
-;; Don't ask to select recipients when encrypting files.  Use
+;; Don't ask to select recipients when encrypting files.  Instead use
 ;; `epa-file-encrypt-to' local variable to specify those.
 (setq epa-file-select-keys nil)
+
+;; Unset `C-z', bound to `suspend-frame', whose behavior in xmonad is
+;; confusng.  `suspend-frame' is still available through `C-x C-z'.
+(global-unset-key "\C-z")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
