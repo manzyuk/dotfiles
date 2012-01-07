@@ -426,6 +426,10 @@ Dmitriy Igrishin's patched version of comint.el."
               )
              completion-ignored-extensions))
 
+;; Don't automatically merge work directories during file name input.
+;; Use `M-s' to force the merge when it appears appropriate.
+(setq ido-auto-merge-work-directories-length -1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Misc ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Do not jump briefly to matching open-paren when close-paren is
