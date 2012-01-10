@@ -583,6 +583,10 @@ Dmitriy Igrishin's patched version of comint.el."
                  (mode . completion-list-mode)
                  (name . "^\\*scratch\\*$")
                  (name . "^\\*Messages\\*$")))
+               ("Org"
+                (or
+                 (mode . org-mode)
+                 (mode . org-agenda-mode)))
                ("LaTeX"
                 (or
                  (mode . latex-mode)
