@@ -60,7 +60,7 @@
 
 (defun find-file-as-root (filename)
   (interactive
-   (list (ido-read-file-name "Find file: ")))
+   (list (ido-read-file-name "Find file as root: ")))
   (find-file (concat "/sudo:root@localhost:" filename)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Startup ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
