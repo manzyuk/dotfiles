@@ -498,7 +498,7 @@
 (setq epa-file-select-keys nil)
 
 ;; Unset `C-z', bound to `suspend-frame', whose behavior in xmonad is
-;; confusng.  `suspend-frame' is still available through `C-x C-z'.
+;; confusing.  `suspend-frame' is still available through `C-x C-z'.
 (global-unset-key "\C-z")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
