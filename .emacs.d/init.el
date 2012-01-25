@@ -105,25 +105,15 @@
 ;; Enable `delete-selection-mode'.
 (delete-selection-mode 1)
 
-;; Don't copy region to `kill-ring' by dragging mouse.
-(setq mouse-drag-copy-region nil)
-
 ;; When I select something in another program to paste it into Emacs,
 ;; but kill something in Emacs before actually pasting it, don't lose
 ;; the selection; save it in the `kill-ring' before the Emacs kill so
 ;; that I can still paste it using C-y M-y.
 (setq save-interprogram-paste-before-kill t)
 
-;; Use clipboard, not primary selection for cutting and pasting.
-(setq x-select-enable-clipboard t)
-(setq x-select-enable-primary nil)
-
 ;; Make mouse middle-click only paste from primary X11 selection, not
 ;; from clipboard or `kill-ring'.
 (global-set-key [mouse-2] 'mouse-yank-primary)
-
-;; Automatically make an active region the window selection.
-(setq select-active-regions t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Bookmarks ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
