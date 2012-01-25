@@ -54,9 +54,9 @@
 (defun shell-command-to-list (command)
   (split-string (shell-command-to-string command) "\n" t))
 
-(defun open-with-evince (name)
+(defun xdg-open (file)
   (shell-command
-   (format "evince \"$LIBRARY/%s\" > /dev/null 2>&1 & disown" name)))
+   (format "xdg-open \"%s\" > /dev/null 2>&1 & disown" file)))
 
 (defun find-file-as-root (filename)
   (interactive
@@ -811,7 +811,11 @@
 (setq library-files
       `((name       . ,(getenv "LIBRARY"))
         (candidates . ,(shell-command-to-list "ls $LIBRARY"))
-        (action     . (("Open with Evince" . open-with-evince)))))
+        (action     . (("Open in the preferred application"
+                        .
+                        (lambda (name)
+                          (xdg-open
+                           (format "$LIBRARY/%s" name))))))))
 
 (global-set-key "\C-cv" 'anything-library)
 
