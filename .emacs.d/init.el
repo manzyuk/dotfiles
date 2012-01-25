@@ -79,6 +79,9 @@
 ;; Enable `column-number-mode'.
 (setq column-number-mode t)
 
+;; Don't show a cursor except in the selected window.
+(setq-default cursor-in-non-selected-windows nil)
+
 ;; Visually indicate empty lines after the buffer end.
 (setq-default indicate-empty-lines t)
 
