@@ -581,6 +581,11 @@
 
 (set-default 'haskell-literate-default 'tex)
 
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ghci-completion")
+(require 'ghci-completion)
+
+(add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; HLint ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
