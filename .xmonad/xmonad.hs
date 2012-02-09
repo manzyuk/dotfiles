@@ -14,7 +14,7 @@ import XMonad.Hooks.SetWMName            (setWMName)
 import XMonad.Hooks.DynamicLog    hiding (xmobar)
 import XMonad.Hooks.ManageDocks          (avoidStruts, manageDocks)
 import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.EwmhDesktops         (fullscreenEventHook)
+import XMonad.Hooks.EwmhDesktops         (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageHelpers
 
 import XMonad.Util.Run                   (spawnPipe, hPutStrLn)
@@ -36,7 +36,7 @@ main = do
              "[Run StdinReader]"
   xmobar1 <- xmobar 1 "%StdinReader%}{%date%"
              "[Run StdinReader, Run Date \"%a %b %_d, %H:%M\" \"date\" 10]"
-  xmonad $ withUrgencyHook NoUrgencyHook defaultConfig {
+  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook defaultConfig {
                focusFollowsMouse  = False
              , borderWidth        = 1
              , focusedBorderColor = "#386890"

@@ -504,6 +504,14 @@
 ;; confusing.  `suspend-frame' is still available through `C-x C-z'.
 (global-unset-key "\C-z")
 
+;; Workaround for the problem of Emacs frame not being raised under X.
+;; http://permalink.gmane.org/gmane.emacs.help/81708
+(defadvice raise-frame (around wmctrl activate)
+  (if (eq (window-system (ad-get-arg 0)) 'x)
+      (x-send-client-message nil 0 (ad-get-arg 0)
+                             "_NET_ACTIVE_WINDOW" 32 '(1))
+    ad-do-it))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Mail ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; My full name and email.
