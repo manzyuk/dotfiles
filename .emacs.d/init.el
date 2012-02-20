@@ -683,6 +683,7 @@
 
 (dolist (mode-hook
          '(emacs-lisp-mode-hook
+           ielm-mode-hook
            lisp-mode-hook
            slime-repl-mode-hook
            scheme-mode-hook
