@@ -756,23 +756,25 @@
 (setq org-capture-templates
       '(("t" "TODO" entry (file "~/org/todo.org") "* TODO %?")))
 
-(eval-after-load "org"
-  '(progn
-     (defun org-mode-in-block-delimiter-p ()
-       (save-excursion
-         (beginning-of-line)
-         (looking-at "^\s*#\\+\\(BEGIN\\|END\\)_.*$")))
+(defun org-mode-in-block-p ()
+  (let ((pos (max (1- (point)) (point-min))))
+    (some (lambda (ovl)
+            (eql (overlay-get ovl 'face)
+                 'org-block-background))
+          (overlays-at pos))))
 
-     (defun org-mode-flyspell-verify ()
-       (let ((pos (max (1- (point)) (point-min))))
-         (and (not (get-text-property pos 'keymap))
-              (not (get-text-property pos 'org-no-flyspell))
-              ;; don't check spelling inside code blocks and block delimiters
-              (not (some (lambda (ovl)
-                           (eql (overlay-get ovl 'face)
-                                'org-block-background))
-                         (overlays-at pos)))
-              (not (org-mode-in-block-delimiter-p)))))))
+(defun org-mode-in-block-delimiter-p ()
+  (save-excursion
+    (beginning-of-line)
+    (looking-at "^\s*#\\+\\(begin\\|end\\)_.*$")))
+
+(defadvice org-mode-flyspell-verify (around org-mode-flyspell-verify-around)
+  (setq ad-return-value
+        (and ad-do-it
+             (not (org-mode-in-block-p))
+             (not (org-mode-in-block-delimiter-p)))))
+
+(ad-activate 'org-mode-flyspell-verify)
 
 (setq org-src-fontify-natively t)
 
